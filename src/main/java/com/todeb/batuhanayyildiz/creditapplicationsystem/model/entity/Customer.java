@@ -13,11 +13,11 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="customers")
+@Table(name="customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Pattern(regexp="^[1-9]{1}[0-9]{9}[02468]{1}$",
             message="Format error. Example Format :00100100101")
@@ -36,4 +36,13 @@ public class Customer {
     @NotBlank
     @Column(name="phone_number")
     private String PhoneNo;
+
+
+    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @JoinColumn(name="credit_score_id")
+    private CreditScore creditScore;
+
+    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @JoinColumn(name="credit_application_id")
+    private CreditApplication creditApplication;
 }

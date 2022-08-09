@@ -20,3 +20,5 @@
 7.	Customer views credit result
 
 ### Design
+
+![Use case diagram Todeb Graduation Project](https://user-images.githubusercontent.com/84630121/183663776-94009d7b-eb60-4705-97ed-a5e20597f5a6.png)

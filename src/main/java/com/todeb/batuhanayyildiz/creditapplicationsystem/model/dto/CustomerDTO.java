@@ -1,25 +1,14 @@
-package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
+package com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
-
-import javax.persistence.*;
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-
-@Entity
-@Table(name="customer")
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CustomerDTO {
     @NotBlank
     private String name;
     @NotBlank
@@ -30,6 +19,7 @@ public class Customer {
     @NotBlank
     @Column(name="identity_number")
     private String identityNo;
+
     @NotNull
     private int monthlyIncome;
 
@@ -38,13 +28,4 @@ public class Customer {
     @NotBlank
     @Column(name="phone_number")
     private String PhoneNo;
-
-
-    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
-    @JoinColumn(name="credit_score_id")
-    private CreditScore creditScore;
-
-    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
-    @JoinColumn(name="credit_application_id")
-    private CreditApplication creditApplication;
 }

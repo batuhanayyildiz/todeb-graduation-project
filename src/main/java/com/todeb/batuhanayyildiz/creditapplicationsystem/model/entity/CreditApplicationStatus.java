@@ -1,6 +1,7 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
-public enum ApplicationStatus {
+public enum CreditApplicationStatus {
+    WAITING,
     ACCEPTED,
     DENIED
 }

@@ -1,4 +1,5 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
-public class ApplicationResult {
+public class CreditApplication {
+
 }

@@ -20,16 +20,18 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    private String name;
-    @NotBlank
-    private String surname;
 
     @Pattern(regexp="^[1-9]{1}[0-9]{9}[02468]{1}$",
             message="Format error. Example Format :00100100101")
     @NotBlank
     @Column(name="identity_number")
     private String identityNo;
+
+    @NotBlank
+    private String name;
+    @NotBlank
+    private String surname;
+
     @NotNull
     private int monthlyIncome;
 
@@ -37,7 +39,7 @@ public class Customer {
             message = "Format error.Please write phone number as unified and starting with zero")
     @NotBlank
     @Column(name="phone_number")
-    private String PhoneNo;
+    private String phoneNo;
 
 
     @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)

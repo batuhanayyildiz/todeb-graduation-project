@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface CreditLimitRepository extends JpaRepository<CreditLimit, Long> {
-    Optional<CreditLimit> findByCustomer_IdentityNo(String identityNo);
+
 }

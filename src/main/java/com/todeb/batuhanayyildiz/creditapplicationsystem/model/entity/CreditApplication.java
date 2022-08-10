@@ -24,6 +24,10 @@ public class CreditApplication {
     @Column(name = "application_status")
     private CreditApplicationStatus applicationStatus;
 
+    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @JoinColumn(name="credit_limit_id")
+    private CreditLimit creditLimit;
+
 
 
     @OneToOne(mappedBy = "creditApplication")

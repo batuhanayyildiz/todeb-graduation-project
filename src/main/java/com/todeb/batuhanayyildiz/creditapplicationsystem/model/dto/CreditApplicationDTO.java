@@ -18,5 +18,7 @@ public class CreditApplicationDTO {
     @Enumerated(EnumType.STRING)
     private CreditApplicationStatus applicationStatus;
 
+    private CreditLimit creditLimit;
+
     private Customer customer;
 }

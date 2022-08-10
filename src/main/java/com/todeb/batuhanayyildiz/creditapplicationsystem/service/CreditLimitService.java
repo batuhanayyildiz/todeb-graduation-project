@@ -6,6 +6,7 @@ import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import java.util.List;
 
 public interface CreditLimitService {
+    /*
     CreditLimit getCreditLimitById(Long id);
     CreditLimit getCreditLimitByCustomerIdentityNo(String identityNo);
     List<CreditLimit> getAllCreditLimits();
@@ -16,9 +17,9 @@ public interface CreditLimitService {
 
     CreditLimit updateCreditLimitByCustomerIdentityNo(String identityNo,CreditLimit creditLimit);
 
-    void creditLimitCalculation();
-    void addCreditLimitToCustomerByIdentityNo(String identityNo);
+    int creditLimitDeterminationByIdentityNo(String identityNo);
 
+*/
 
 
 

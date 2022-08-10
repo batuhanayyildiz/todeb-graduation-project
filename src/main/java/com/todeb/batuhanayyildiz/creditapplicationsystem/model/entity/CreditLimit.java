@@ -21,5 +21,5 @@ public class CreditLimit {
     private int creditLimit;
 
     @OneToOne(mappedBy = "creditLimit")
-    private  Customer customer;
+    private  CreditApplication creditApplication;
 }

@@ -15,7 +15,11 @@ public interface CreditLimitService {
     boolean deleteCreditLimitByCustomerIdentityNo(String identityNo);
 
     CreditLimit updateCreditLimitByCustomerIdentityNo(String identityNo,CreditLimit creditLimit);
+
+    void creditLimitCalculation();
     void addCreditLimitToCustomerByIdentityNo(String identityNo);
+
+
 
 
 

@@ -90,6 +90,11 @@ public class CreditLimitImpl implements CreditLimitService {
         }
 
     @Override
+    public void creditLimitCalculation() {
+
+    }
+
+    @Override
     public void addCreditLimitToCustomerByIdentityNo(String identityNo) {
 
     }

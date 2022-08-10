@@ -83,7 +83,7 @@ public class CreditLimitImpl implements CreditLimitService {
             throw new NotFoundException("Credit Limit");
         }
         CreditLimit updatedCreditLimit = creditLimitByCustomerIdentityNo.get();
-        if (!ObjectUtils.isEmpty(creditLimitByCustomerIdentityNo.get())){
+        if (!ObjectUtils.isEmpty(creditLimit.getCreditLimit())){
             updatedCreditLimit.setCreditLimit(creditLimit.getCreditLimit());}
 
         return creditLimitRepository.save(updatedCreditLimit);

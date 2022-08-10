@@ -80,7 +80,7 @@ public class CreditScoreImpl implements CreditScoreService {
             throw new NotFoundException("Credit Score");
         }
         CreditScore updatedCreditScore = creditScoreByCustomerIdentityNo.get();
-        if (!ObjectUtils.isEmpty(creditScoreByCustomerIdentityNo.get())){
+        if (!ObjectUtils.isEmpty(creditScore.getCreditScore())){
             updatedCreditScore.setCreditScore(creditScore.getCreditScore());}
 
         return creditScoreRepository.save(updatedCreditScore);

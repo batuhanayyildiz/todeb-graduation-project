@@ -30,6 +30,18 @@ public class CreditLimitImpl implements CreditLimitService {
             return new NotFoundException("CreditLimit");});
 
     }
+    @Override
+    public CreditLimit getCreditLimitByCustomerIdentityNo(String identityNo) {
+        Optional<CreditLimit> creditLimitByCustomerIdentityNo = creditLimitRepository.findByCustomer_IdentityNo(identityNo);
+        return creditLimitByCustomerIdentityNo.orElseThrow(()->{
+            log.error("CreditLimit is not found by identity number: "+identityNo);
+            return new NotFoundException("CreditLimit");});
+    }
+
+    @Override
+    public List<CreditLimit> getAllCreditLimits() {
+        return creditLimitRepository.findAll();
+    }
 
     @Override
     public void createCreditLimit(CreditLimit creditLimit) {
@@ -50,33 +62,37 @@ public class CreditLimitImpl implements CreditLimitService {
 
 
     }
-
     @Override
-    public CreditLimit updateCreditLimit(CreditLimit creditLimit) {
-        Optional<CreditLimit> creditLimitById = creditLimitRepository.findBookByName(creditLimitName);
-        if (!creditLimitByName.isPresent()) {
-            throw new NotFoundException("Book");
+    public boolean deleteCreditLimitByCustomerIdentityNo(String identityNo){
+        Optional<CreditLimit> creditLimitByCustomerIdentityNo = creditLimitRepository.findByCustomer_IdentityNo(identityNo);
+        CreditLimit creditLimit=creditLimitByCustomerIdentityNo.get();
+        Long id=creditLimit.getId();
+        if(!ObjectUtils.isEmpty(creditLimitByCustomerIdentityNo)){
+            log.info("in if condition");
+            creditLimitRepository.delete(getCreditLimitById(id));
+            return true;
         }
-        CreditLimit updatedCreditLimit = creditLimitByName.get();
-        if (!ObjectUtils.isEmpty(creditLimitDTO.getName())){
-            updatedBook.setName(creditLimitDTO.getName());
-
-        return creditLimitRepository.save(updatedBook);
-        return null;
-    }
-
-    @Override
-    public void addCreditLimitToCustomer(Customer customer) {
+        else throw new NotFoundException("id"+""+id.toString());
 
     }
 
     @Override
-    public CreditLimit getCreditLimitByCustomerIdentityNo(String customerIdentityNo) {
-        return null;
-    }
+    public CreditLimit updateCreditLimitByCustomerIdentityNo(String identityNo,CreditLimit creditLimit) {
+        Optional<CreditLimit> creditLimitByCustomerIdentityNo = creditLimitRepository.findByCustomer_IdentityNo(identityNo);
+        if (!creditLimitByCustomerIdentityNo.isPresent()) {
+            throw new NotFoundException("Credit Limit");
+        }
+        CreditLimit updatedCreditLimit = creditLimitByCustomerIdentityNo.get();
+        if (!ObjectUtils.isEmpty(creditLimitByCustomerIdentityNo.get())){
+            updatedCreditLimit.setCreditLimit(creditLimit.getCreditLimit());}
+
+        return creditLimitRepository.save(updatedCreditLimit);
+        }
 
     @Override
-    public List<CreditLimit> getAllCreditLimits() {
-        return null;
+    public void addCreditLimitToCustomerByIdentityNo(String identityNo) {
+
     }
+
+
 }

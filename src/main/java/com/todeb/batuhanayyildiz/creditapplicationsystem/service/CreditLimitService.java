@@ -7,14 +7,17 @@ import java.util.List;
 
 public interface CreditLimitService {
     CreditLimit getCreditLimitById(Long id);
+    CreditLimit getCreditLimitByCustomerIdentityNo(String identityNo);
+    List<CreditLimit> getAllCreditLimits();
     void createCreditLimit(CreditLimit creditLimit);
 
     boolean deleteCreditLimit(Long id);
-    CreditLimit updateCreditLimit(CreditLimit creditLimit);
-    void addCreditLimitToCustomer(Customer customer);
+    boolean deleteCreditLimitByCustomerIdentityNo(String identityNo);
 
-    CreditLimit getCreditLimitByCustomerIdentityNo(String customerIdentityNo);
-    List<CreditLimit> getAllCreditLimits();
+    CreditLimit updateCreditLimitByCustomerIdentityNo(String identityNo,CreditLimit creditLimit);
+    void addCreditLimitToCustomerByIdentityNo(String identityNo);
+
+
 
 
 }

@@ -1,8 +1,8 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.exception.handler;
 
 
-import com.todeb.batuhanayyildiz.libraryautomationapplication.exception.CustomJwtException;
-import com.todeb.batuhanayyildiz.libraryautomationapplication.exception.NotFoundException;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CustomJwtException;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

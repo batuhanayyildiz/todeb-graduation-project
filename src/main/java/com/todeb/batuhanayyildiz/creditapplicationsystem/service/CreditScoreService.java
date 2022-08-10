@@ -16,6 +16,6 @@ public interface CreditScoreService {
 
     CreditScore updateCreditScoreByCustomerIdentityNo(String identityNo,CreditScore creditScore);
 
-    void creditScoreCalculation();
-    void addCreditScoreToCustomerByIdentityNo(String identityNo);
+    int creditScoreCalculation();
+
 }

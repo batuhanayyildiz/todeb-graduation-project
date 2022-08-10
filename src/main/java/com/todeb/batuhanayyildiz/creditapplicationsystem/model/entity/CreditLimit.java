@@ -16,10 +16,10 @@ import javax.persistence.OneToOne;
 public class CreditLimit {
     // It is created as seperated entity because when application expands, this area can be more complex
     @Id
-    private int id;
+    private Long id;
 
     private int creditLimit;
 
     @OneToOne(mappedBy = "creditLimit")
-    private  CreditApplication creditApplication;
+    private  Customer customer;
 }

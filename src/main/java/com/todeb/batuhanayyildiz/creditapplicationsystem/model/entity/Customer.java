@@ -47,6 +47,10 @@ public class Customer {
     private CreditScore creditScore;
 
     @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @JoinColumn(name="credit_limit_id")
+    private CreditLimit creditLimit;
+
+    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     @JoinColumn(name="credit_application_id")
     private CreditApplication creditApplication;
 }

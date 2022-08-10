@@ -4,6 +4,9 @@ import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditLimi
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CreditLimitRepository extends JpaRepository<CreditLimit, Long> {
+    Optional<CreditLimit> findBy
 }

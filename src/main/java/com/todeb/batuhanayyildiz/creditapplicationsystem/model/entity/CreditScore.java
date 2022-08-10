@@ -16,7 +16,7 @@ public class CreditScore {
     // To prevent that , it is created as seperated entity, not as a variable.
 
     @Id
-    int id;
+    private Long id;
     private int creditScore;
 
     @OneToOne(mappedBy = "creditScore")

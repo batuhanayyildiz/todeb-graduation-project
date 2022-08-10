@@ -9,7 +9,7 @@ public interface CreditScoreService {
     CreditScore getCreditScoreById(Long id);
     CreditScore getCreditScoreByCustomerIdentityNo(String identityNo);
     List<CreditScore> getAllCreditScores();
-    void createCreditScore(CreditScore creditScore);
+    CreditScore createCreditScore();
 
     boolean deleteCreditScore(Long id);
     boolean deleteCreditScoreByCustomerIdentityNo(String identityNo);

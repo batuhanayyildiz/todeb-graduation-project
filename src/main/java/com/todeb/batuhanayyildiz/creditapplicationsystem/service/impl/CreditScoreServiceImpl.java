@@ -2,10 +2,8 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditScoreRepository;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditScoreService;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,9 +15,9 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class CreditScoreImpl implements CreditScoreService {
+public class CreditScoreServiceImpl implements CreditScoreService {
     private CreditScoreRepository creditScoreRepository;
-    private CustomerService customerService;
+
 
 
     @Override
@@ -44,9 +42,10 @@ public class CreditScoreImpl implements CreditScoreService {
     }
 
     @Override
-    public void createCreditScore(CreditScore creditScore) {
+    public CreditScore createCreditScore() {
         log.info("method is started to use");
-        creditScoreRepository.save(creditScore);
+        CreditScore creditScore=new CreditScore();
+        return creditScoreRepository.save(creditScore);
 
     }
 

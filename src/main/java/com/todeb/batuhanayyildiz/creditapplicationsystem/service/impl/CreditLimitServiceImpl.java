@@ -2,8 +2,6 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditLimit;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditLimitRepository;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditLimitService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class CreditLimitImpl implements CreditLimitService {
+public class CreditLimitServiceImpl implements CreditLimitService {
 
     private CreditLimitRepository creditLimitRepository;
 
@@ -44,9 +42,9 @@ public class CreditLimitImpl implements CreditLimitService {
     }
 
     @Override
-    public void createCreditLimit(CreditLimit creditLimit) {
+    public CreditLimit createCreditLimit(CreditLimit creditLimit) {
         log.info("method is started to use");
-        creditLimitRepository.save(creditLimit);
+        return creditLimitRepository.save(creditLimit);
 
     }
 

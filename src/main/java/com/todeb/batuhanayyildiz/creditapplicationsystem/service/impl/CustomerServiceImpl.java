@@ -1,8 +1,10 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CustomerRepository;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditScoreService;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,9 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository customerRepository;
+    private CreditScoreServiceImpl creditScoreService;
+
+    private CreditLimitServiceImpl creditLimitService;
 
 
     @Override
@@ -96,6 +101,25 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         return customerRepository.save(updatedCustomer);
+    }
+    @Override
+    public Customer addCreditScoreToCustomerByIdentityNo(String identityNo){
+        log.info("Business logic is started");
+        CreditScore creditScore = creditScoreService.createCreditScore();
+        creditScore.setCreditScore(creditScoreService.creditScoreCalculation());
+
+        Customer customer= getCustomerByIdentityNo(identityNo);
+        customer.setCreditScore(creditScore);
+        log.info("Business logic is completed");
+        return customer;
+
+    }
+
+    @Override
+    public Customer addCreditLimitToCustomerByIdentityNo(String identityNo){
+        return null;
+
+
     }
 
 

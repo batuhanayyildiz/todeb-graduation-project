@@ -3,15 +3,19 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Builder
+@Table(name="credit_score")
 public class CreditScore {
 
     // This entity takes its value from different service.
@@ -21,10 +25,21 @@ public class CreditScore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int creditScore;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @Column(name="score")
+    private int score;
+
+
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
+    public CreditScore(Customer customer,int score) {
+        this.customer=customer;
+        this.score=score;
+
+    }
 }

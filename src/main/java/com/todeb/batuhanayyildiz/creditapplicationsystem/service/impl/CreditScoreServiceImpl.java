@@ -2,6 +2,7 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditScoreRepository;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditScoreService;
 import lombok.RequiredArgsConstructor;
@@ -42,11 +43,11 @@ public class CreditScoreServiceImpl implements CreditScoreService {
     }
 
     @Override
-    public CreditScore createCreditScore() {
+    public CreditScore createCreditScore(Customer customer) {
         log.info("method is started to use");
-        CreditScore creditScore =  new CreditScore();
-
+        CreditScore creditScore =  new CreditScore(customer,creditScoreCalculation());
         return creditScoreRepository.save(creditScore);
+
 
     }
 
@@ -83,8 +84,8 @@ public class CreditScoreServiceImpl implements CreditScoreService {
             throw new NotFoundException("Credit Score");
         }
         CreditScore updatedCreditScore = creditScoreByCustomerIdentityNo.get();
-        if (!ObjectUtils.isEmpty(creditScore.getCreditScore())){
-            updatedCreditScore.setCreditScore(creditScore.getCreditScore());}
+        if (!ObjectUtils.isEmpty(creditScore.getScore())){
+            updatedCreditScore.setScore(creditScore.getScore());}
 
         return creditScoreRepository.save(updatedCreditScore);
     }

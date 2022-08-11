@@ -25,31 +25,33 @@ public class Customer {
 
     //@Pattern(regexp="^[1-9]{1}[0-9]{9}[02468]{1}$",
             //message="Format error. Example Format :00100100101")
-    //@NotBlank
-    @Column(name="identity_number")
+    @NotBlank(message = "identity number cannot be empty")
+    @Column(name="identity_number",nullable = false)
     private String identityNo;
 
-   // @NotBlank
+    @NotBlank(message = "name cannot be empty")
+    @Column(name="name")
     private String name;
-    //@NotBlank
+    @NotBlank(message = "surname cannot be empty")
+    @Column(name="surname")
     private String surname;
 
-    //@NotNull
+    @NotNull(message = "monthly income cannot be empty")
+    @Column(name="monthly_income")
     private int monthlyIncome;
 
     //@Pattern(regexp="^(0)[0-9]{10}$" ,
             //message = "Format error.Please write phone number as unified and starting with zero")
-    //@NotBlank
+    @NotBlank(message = "phone number cannot be empty")
     @Column(name="phone_number")
     private String phoneNo;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<CreditScore> creditScores;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name="credit_score_id")
-    private CreditScore creditScore;
 
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<CreditApplication> creditApplications;
 
 

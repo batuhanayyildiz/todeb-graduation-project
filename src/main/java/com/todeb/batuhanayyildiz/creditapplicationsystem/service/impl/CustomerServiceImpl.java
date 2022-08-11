@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
             return customerRepository.save(customer);
         }
         else {
-            throw new CustomJwtException("There is a book with same name.", HttpStatus.BAD_REQUEST);
+            throw new CustomJwtException("There is a customer with same identity number.", HttpStatus.BAD_REQUEST);
         }
 
 
@@ -113,13 +113,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer addCreditScoreToCustomerByIdentityNo(String identityNo){
         log.info("Business logic is started");
-        CreditScore creditScore = creditScoreService.createCreditScore();
-        creditScore.setCreditScore(creditScoreService.creditScoreCalculation());
-
         Customer customer= getCustomerByIdentityNo(identityNo);
-        customer.setCreditScore(creditScore);
+        CreditScore creditScore = creditScoreService.createCreditScore(customer);
+        customer.getCreditScores().add(creditScore);
         log.info("Business logic is completed");
-        return customer;
+        return customerRepository.save(customer);
 
     }
 

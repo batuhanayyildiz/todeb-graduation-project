@@ -20,5 +20,5 @@ public class CreditApplicationDTO {
 
     private CreditLimit creditLimit;
 
-    private Customer customer;
+
 }

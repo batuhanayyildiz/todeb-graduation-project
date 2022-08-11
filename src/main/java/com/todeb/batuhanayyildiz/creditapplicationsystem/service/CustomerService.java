@@ -8,7 +8,7 @@ public interface CustomerService {
     Customer getCustomerById(Long id);
     Customer getCustomerByIdentityNo(String identityNo);
     List<Customer> getAllCustomers();
-    void createCustomer(Customer customer);
+    Customer createCustomer(Customer customer);
 
     boolean deleteCustomer(Long id);
     boolean deleteCustomerByIdentityNo(String identityNo);

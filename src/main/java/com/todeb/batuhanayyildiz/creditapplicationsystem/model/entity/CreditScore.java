@@ -1,6 +1,7 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,10 +17,12 @@ public class CreditScore {
     // To prevent that , it is created as seperated entity, not as a variable.
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int creditScore;
 
-    @OneToOne(mappedBy = "creditScore")
+
+    @OneToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
 }

@@ -1,6 +1,7 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,14 @@ public class CreditApplication {
     @Column(name = "application_status")
     private CreditApplicationStatus applicationStatus;
 
-    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="credit_limit_id")
     private CreditLimit creditLimit;
 
 
-
-    @OneToOne(mappedBy = "creditApplication")
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
 

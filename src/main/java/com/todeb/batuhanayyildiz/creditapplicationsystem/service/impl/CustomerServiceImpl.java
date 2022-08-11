@@ -1,5 +1,6 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
+import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CustomJwtException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
@@ -8,6 +9,7 @@ import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditScoreServ
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -47,9 +49,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void createCustomer(Customer customer) {
+    public Customer createCustomer(Customer customer) {
         log.info("method is started to use");
-        customerRepository.save(customer);
+        if (!customerRepository.existsByIdentityNo(customer.getIdentityNo())){
+            return customerRepository.save(customer);
+        }
+        else {
+            throw new CustomJwtException("There is a book with same name.", HttpStatus.BAD_REQUEST);
+        }
+
+
 
     }
 

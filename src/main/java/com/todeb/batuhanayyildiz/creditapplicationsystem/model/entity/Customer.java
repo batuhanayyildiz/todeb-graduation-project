@@ -1,5 +1,6 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -42,13 +44,11 @@ public class Customer {
     private String phoneNo;
 
 
-    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="credit_score_id")
     private CreditScore creditScore;
 
 
-
-    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
-    @JoinColumn(name="credit_application_id")
-    private CreditApplication creditApplication;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
+    private List<CreditApplication> creditApplications;
 }

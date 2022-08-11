@@ -23,23 +23,23 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Pattern(regexp="^[1-9]{1}[0-9]{9}[02468]{1}$",
-            message="Format error. Example Format :00100100101")
-    @NotBlank
+    //@Pattern(regexp="^[1-9]{1}[0-9]{9}[02468]{1}$",
+            //message="Format error. Example Format :00100100101")
+    //@NotBlank
     @Column(name="identity_number")
     private String identityNo;
 
-    @NotBlank
+   // @NotBlank
     private String name;
-    @NotBlank
+    //@NotBlank
     private String surname;
 
-    @NotNull
+    //@NotNull
     private int monthlyIncome;
 
-    @Pattern(regexp="^(0)[0-9]{10}$" ,
-            message = "Format error.Please write phone number as unified and starting with zero")
-    @NotBlank
+    //@Pattern(regexp="^(0)[0-9]{10}$" ,
+            //message = "Format error.Please write phone number as unified and starting with zero")
+    //@NotBlank
     @Column(name="phone_number")
     private String phoneNo;
 
@@ -51,4 +51,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
     private List<CreditApplication> creditApplications;
+
+
 }

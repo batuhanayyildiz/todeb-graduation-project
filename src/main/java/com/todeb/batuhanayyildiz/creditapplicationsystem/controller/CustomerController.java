@@ -5,6 +5,8 @@ import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CustomerMapper;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CustomerServiceImpl;
 import org.mapstruct.factory.Mappers;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,10 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-@Validated
+
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
+    @Autowired
     private CustomerServiceImpl customerService;
     private static final CustomerMapper CUSTOMER_MAPPER = Mappers.getMapper(CustomerMapper.class);
     @GetMapping
@@ -44,7 +47,9 @@ public class CustomerController {
 
     @PostMapping("/create")
     public ResponseEntity createNewCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
+
         Customer respCustomer = customerService.createCustomer(CUSTOMER_MAPPER.toEntity(customerDTO));
+
         if (respCustomer == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Customer could not be created successfully");
         }

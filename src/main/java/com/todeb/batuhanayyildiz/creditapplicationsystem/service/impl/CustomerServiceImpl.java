@@ -21,10 +21,9 @@ import java.util.Optional;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private CustomerRepository customerRepository;
-    private CreditScoreServiceImpl creditScoreService;
+    private final CustomerRepository customerRepository;
+    private final CreditScoreServiceImpl creditScoreService;
 
-    private CreditLimitServiceImpl creditLimitService;
 
 
     @Override

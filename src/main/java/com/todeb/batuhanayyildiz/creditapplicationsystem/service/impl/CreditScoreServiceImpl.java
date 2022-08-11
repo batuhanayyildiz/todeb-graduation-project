@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class CreditScoreServiceImpl implements CreditScoreService {
-    private CreditScoreRepository creditScoreRepository;
+    private final CreditScoreRepository creditScoreRepository;
 
 
 
@@ -44,7 +44,8 @@ public class CreditScoreServiceImpl implements CreditScoreService {
     @Override
     public CreditScore createCreditScore() {
         log.info("method is started to use");
-        CreditScore creditScore=new CreditScore();
+        CreditScore creditScore =  new CreditScore();
+
         return creditScoreRepository.save(creditScore);
 
     }

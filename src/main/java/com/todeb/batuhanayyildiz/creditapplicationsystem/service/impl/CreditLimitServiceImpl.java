@@ -17,11 +17,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class CreditLimitServiceImpl implements CreditLimitService {
+
+
+    //Baştan yapmalısın customer'dan applicationa attın bağlantıyı customeridentityno içeren her şey hata verecek
     /*
 
-    private CreditLimitRepository creditLimitRepository;
 
-    private ApplicationServiceImpl applicationService;
+    private final CreditLimitRepository creditLimitRepository;
+
+    private final CreditApplicationServiceImpl applicationService;
 
 
     @Override
@@ -34,10 +38,13 @@ public class CreditLimitServiceImpl implements CreditLimitService {
     }
     @Override
     public CreditLimit getCreditLimitByCustomerIdentityNo(String identityNo) {
+
         Optional<CreditLimit> creditLimitByCustomerIdentityNo = creditLimitRepository.findByCustomer_IdentityNo(identityNo);
         return creditLimitByCustomerIdentityNo.orElseThrow(()->{
             log.error("CreditLimit is not found by identity number: "+identityNo);
             return new NotFoundException("CreditLimit");});
+
+
     }
 
     @Override
@@ -97,7 +104,7 @@ public class CreditLimitServiceImpl implements CreditLimitService {
 
     }
 
-*/
 
+*/
 
 }

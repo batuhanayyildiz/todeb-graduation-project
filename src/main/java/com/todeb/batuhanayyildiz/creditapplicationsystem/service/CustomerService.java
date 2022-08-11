@@ -10,14 +10,14 @@ public interface CustomerService {
     List<Customer> getAllCustomers();
     Customer createCustomer(Customer customer);
 
-    boolean deleteCustomer(Long id);
+    boolean deleteCustomerById(Long id);
     boolean deleteCustomerByIdentityNo(String identityNo);
 
     Customer updateCustomerByIdentityNo(String identityNo,Customer customer);
 
     Customer addCreditScoreToCustomerByIdentityNo(String identityNo);
 
-    Customer addCreditLimitToCustomerByIdentityNo(String identityNo);
+
 
 
 }

@@ -63,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean deleteCustomer(Long id) {
+    public boolean deleteCustomerById(Long id) {
         Customer customer=getCustomerById(id);
         if(!ObjectUtils.isEmpty(customer)){
             log.info("in if condition");
@@ -121,13 +121,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setCreditScore(creditScore);
         log.info("Business logic is completed");
         return customer;
-
-    }
-
-    @Override
-    public Customer addCreditLimitToCustomerByIdentityNo(String identityNo){
-        return null;
-
 
     }
 

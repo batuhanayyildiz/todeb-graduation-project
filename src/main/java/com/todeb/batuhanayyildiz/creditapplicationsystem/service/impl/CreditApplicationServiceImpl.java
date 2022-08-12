@@ -69,7 +69,7 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
 
         return creditApplicationRepository.save(creditApplication);
     }
-    public CreditApplication addCreditLimitToCreditApplicationByCustomerIdentityNo(Customer customer) {
+    public CreditApplication addCreditLimitToCreditApplicationByCustomer(Customer customer) {
         log.info("Business logic is started");
         CreditApplication creditApplication= getLastCreditApplicationByCustomer(customer);
         CreditLimit creditLimit = creditLimitService.createCreditLimit(creditApplication);

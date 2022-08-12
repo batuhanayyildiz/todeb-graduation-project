@@ -16,5 +16,5 @@ public interface CreditApplicationService {
     CreditApplication createCreditApplication(Customer customer);
 
     CreditApplication determineLastCreditApplicationStatusByCustomer(Customer customer);
-    CreditApplication addCreditLimitToCreditApplicationByCustomerIdentityNo(Customer customer);
+    CreditApplication addCreditLimitToCreditApplicationByCustomer(Customer customer);
     }

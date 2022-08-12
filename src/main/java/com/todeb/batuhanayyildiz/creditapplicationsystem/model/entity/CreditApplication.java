@@ -2,14 +2,19 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 
 public class CreditApplication {
@@ -26,9 +31,8 @@ public class CreditApplication {
     @Column(name = "application_status")
     private CreditApplicationStatus applicationStatus;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name="credit_limit_id")
-    private CreditLimit creditLimit;
+    @OneToMany(mappedBy = "creditApplication",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<CreditLimit> creditLimits;
 
 
     @JsonIgnore
@@ -36,7 +40,10 @@ public class CreditApplication {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-
+    public CreditApplication(Customer customer){
+        this.customer=customer;
+        this.applicationStatus=CreditApplicationStatus.WAITING;
+    }
 
 
 

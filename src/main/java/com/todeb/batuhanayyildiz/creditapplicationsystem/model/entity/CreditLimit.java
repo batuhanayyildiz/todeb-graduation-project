@@ -19,6 +19,7 @@ public class CreditLimit {
 
     private int creditLimit;
 
-    @OneToOne(mappedBy = "creditLimit")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "credit_application_id", referencedColumnName = "id")
     private  CreditApplication creditApplication;
 }

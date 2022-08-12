@@ -9,6 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface CreditLimitRepository extends JpaRepository<CreditLimit, Long> {
+    Optional<CreditLimit> findByCreditApplication_Customer_IdentityNo(String identityNo);
+    Optional<CreditLimit> findByCreditApplication_Id(Long id);
 
 
 }

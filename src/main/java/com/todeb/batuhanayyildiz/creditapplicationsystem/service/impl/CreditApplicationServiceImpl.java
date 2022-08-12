@@ -58,6 +58,7 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     }
     @Override
     public CreditApplication determineLastCreditApplicationStatusByCustomer(Customer customer) {
+        log.info("Business logic is started");
         CreditApplication creditApplication = getLastCreditApplicationByCustomer(customer);
         int customerCreditScore = creditScoreService.getLastCreditScoreByCustomer(customer).getScore();
         if (customerCreditScore<500){
@@ -66,7 +67,7 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
         else{
             creditApplication.setApplicationStatus(CreditApplicationStatus.ACCEPTED);
         }
-
+        log.info("Business logic is completed");
         return creditApplicationRepository.save(creditApplication);
     }
     public CreditApplication addCreditLimitToCreditApplicationByCustomer(Customer customer) {
@@ -78,10 +79,18 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
         return creditApplicationRepository.save(creditApplication);
     }
 
+    public CreditApplication updateCreditLimitOfCreditApplicationByCustomer(Customer customer) {
+        CreditApplication updateCreditApplication= getLastCreditApplicationByCustomer(customer);
+        CreditScore creditScore = creditScoreService.getLastCreditScoreByCustomer(customer);
+        CreditLimit creditLimit= creditLimitService.getLastCreditLimitByCreditApplication(updateCreditApplication);
+
+        double updateCreditLimit= creditLimitService.creditLimitCalculation(customer,updateCreditApplication,creditScore);
+        creditLimit.setCreditLimit(updateCreditLimit);
+
+        return creditApplicationRepository.save(updateCreditApplication);
 
 
-
-
+    }
 
 
 

@@ -12,8 +12,9 @@ public interface CreditLimitService {
 
     CreditLimit getCreditLimitById(Long id);
     CreditLimit getCreditLimitByApplicationId(Long id);
+    CreditLimit getLastCreditLimitByCreditApplication(CreditApplication creditApplication);
     CreditLimit createCreditLimit(CreditApplication creditApplication);
-    double creditLimitCalculation(String identityNo, CreditApplication creditApplication, CreditScore creditScore);
+    double creditLimitCalculation(Customer customer, CreditApplication creditApplication, CreditScore creditScore);
 
 
 

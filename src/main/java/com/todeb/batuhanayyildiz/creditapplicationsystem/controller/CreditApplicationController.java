@@ -28,7 +28,7 @@ public class CreditApplicationController {
         return "Welcome to Credit Application Service!";
     }
 
-    @GetMapping("/get-by-id/{id}")
+    @GetMapping("/get/by-id/{id}")
     public ResponseEntity getCreditApplicationById(@PathVariable("id") Long id){
         CreditApplication byId = creditApplicationService.getCreditApplicationById(id);
         return ResponseEntity.status(HttpStatus.OK).body(CREDIT_APPLICATION_MAPPER.toDto(byId));
@@ -40,13 +40,30 @@ public class CreditApplicationController {
         return ResponseEntity.status(HttpStatus.OK).body(CREDIT_APPLICATION_MAPPER.toDto(byId));
     }
 */
-    @PutMapping("/determine-last-application-status/by-identity-number/{identityNo}")
+    @PutMapping("/determine/last-application-status/by-identity-number/{identityNo}")
     public ResponseEntity determineLastCreditApplicationStatusByCustomerIdentityNo(
             @PathVariable String identityNo) {
         Customer customer = customerService.getCustomerByIdentityNo(identityNo);
         creditApplicationService.determineLastCreditApplicationStatusByCustomer(customer);
         return ResponseEntity.status(HttpStatus.OK).body("Related Application Status was determined successfully");
     }
+    @PutMapping("/determine/credit-limit/by-identity-number/{identityNo}")
+    public ResponseEntity updateCreditLimitOfCreditApplicationByCustomer(
+            @PathVariable String identityNo) {
+        Customer customer = customerService.getCustomerByIdentityNo(identityNo);
+        creditApplicationService.updateCreditLimitOfCreditApplicationByCustomer(customer);
+        return ResponseEntity.status(HttpStatus.OK).body("Related Credit Limit was determined for related Customer successfully");
+    }
+
+    @PutMapping("/add/credit-limit/by-identity-number/{identityNo}")
+    public ResponseEntity addCreditApplicationToCustomerByIdentityNo(
+            @PathVariable String identityNo) {
+        Customer customer = customerService.getCustomerByIdentityNo(identityNo);
+        creditApplicationService.addCreditLimitToCreditApplicationByCustomer(customer);
+        return ResponseEntity.status(HttpStatus.OK).body("Related Credit Limit was added to related Customer successfully");
+    }
+
+
 
 
 

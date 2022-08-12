@@ -38,12 +38,12 @@ public class CustomerController {
         return ResponseEntity.ok(allCustomersDTO);
     }
 
-    @GetMapping("/get-by-id/{id}")
+    @GetMapping("/get/by-id/{id}")
     public ResponseEntity getCustomerById(@PathVariable("id") Long id){
         Customer byId = customerService.getCustomerById(id);
         return ResponseEntity.status(HttpStatus.OK).body(CUSTOMER_MAPPER.toDto(byId));
     }
-    @GetMapping("/get-by-identity-number/{identityNo}")
+    @GetMapping("/get/by-identity-number/{identityNo}")
     public ResponseEntity getCustomerByIdentityNo(@PathVariable("identityNo") String identityNo){
         Customer byId = customerService.getCustomerByIdentityNo(identityNo);
         return ResponseEntity.status(HttpStatus.OK).body(CUSTOMER_MAPPER.toDto(byId));
@@ -84,14 +84,14 @@ public class CustomerController {
 
     }
 
-    @PutMapping("/add-credit-score/by-identity-number/{identityNo}")
+    @PutMapping("/add/credit-score/by-identity-number/{identityNo}")
     public ResponseEntity addCreditScoreToCustomerByIdentityNo(
             @PathVariable String identityNo) {
         customerService.addCreditScoreToCustomerByIdentityNo(identityNo);
         return ResponseEntity.status(HttpStatus.OK).body("Related Credit Score was added to related Customer successfully");
     }
 
-    @PutMapping("/add-credit-application/by-identity-number/{identityNo}")
+    @PutMapping("/add/credit-application/by-identity-number/{identityNo}")
     public ResponseEntity addCreditApplicationToCustomerByIdentityNo(
             @PathVariable String identityNo) {
         customerService.addCreditApplicationToCustomerByIdentityNo(identityNo);

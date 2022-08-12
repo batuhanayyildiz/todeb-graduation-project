@@ -84,6 +84,19 @@ public class CustomerController {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    // For testing corresponding service methods with controller
     @PutMapping("/add/credit-score/by-identity-number/{identityNo}")
     public ResponseEntity addCreditScoreToCustomerByIdentityNo(
             @PathVariable String identityNo) {

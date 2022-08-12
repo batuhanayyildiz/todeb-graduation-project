@@ -40,6 +40,20 @@ public class CreditApplicationController {
         return ResponseEntity.status(HttpStatus.OK).body(CREDIT_APPLICATION_MAPPER.toDto(byId));
     }
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // For testing corresponding service methods with controller
     @PutMapping("/determine/last-application-status/by-identity-number/{identityNo}")
     public ResponseEntity determineLastCreditApplicationStatusByCustomerIdentityNo(
             @PathVariable String identityNo) {

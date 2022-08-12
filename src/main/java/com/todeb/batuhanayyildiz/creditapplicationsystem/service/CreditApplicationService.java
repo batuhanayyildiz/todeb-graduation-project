@@ -14,11 +14,6 @@ public interface CreditApplicationService {
 
 
     CreditApplication createCreditApplication(Customer customer);
-    CreditApplication changeStatus(CreditApplication creditApplication);
-    List<CreditApplication> getAllCreditApplications();
-    boolean deleteCreditApplication(Long id);
-    boolean deleteCreditApplicationByCustomerIdentityNo(String identityNo);
-    CreditApplication updateCreditApplicationByCustomerIdentityNo(String identityNo,CreditApplication creditApplication);
 
     CreditApplication determineLastCreditApplicationStatusByCustomer(Customer customer);
 

@@ -39,7 +39,8 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     @Override
     public CreditApplication getLastCreditApplicationByCustomer(Customer customer) {
         List<CreditApplication> creditApplicationByIdentityNo = creditApplicationRepository.findAll().stream()
-                .filter(creditApplication -> creditApplication.getCustomer()==customer).collect(Collectors.toList());
+                .filter(creditApplication -> creditApplication.getCustomer()==customer)
+                .sorted(getCreditApplicationComparator()).collect(Collectors.toList());
         Optional<CreditApplication> creditApplication=Optional.of(creditApplicationByIdentityNo.get(creditApplicationByIdentityNo.size()-1));
 
         return creditApplication.orElseThrow(()->{
@@ -70,30 +71,9 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
         return creditApplicationRepository.save(creditApplication);
     }
 
-    @Override
-    public CreditApplication changeStatus(CreditApplication creditApplication) {
-        return null;
-    }
 
-    @Override
-    public List<CreditApplication> getAllCreditApplications() {
-        return null;
-    }
 
-    @Override
-    public boolean deleteCreditApplication(Long id) {
-        return false;
-    }
 
-    @Override
-    public boolean deleteCreditApplicationByCustomerIdentityNo(String identityNo) {
-        return false;
-    }
-
-    @Override
-    public CreditApplication updateCreditApplicationByCustomerIdentityNo(String identityNo, CreditApplication creditApplication) {
-        return null;
-    }
 
 
 

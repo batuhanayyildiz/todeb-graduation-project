@@ -44,7 +44,8 @@ public class CreditScoreServiceImpl implements CreditScoreService {
     @Override
     public CreditScore getLastCreditScoreByCustomer(Customer customer) {
         List<CreditScore> creditScoreByCustomer = creditScoreRepository.findAll().stream()
-                .filter(creditScore -> creditScore.getCustomer()==customer).collect(Collectors.toList());
+                .filter(creditScore -> creditScore.getCustomer()==customer)
+                .sorted(getCreditScoreComparator()).collect(Collectors.toList());
         Optional<CreditScore> creditScore= Optional.of(creditScoreByCustomer.get(creditScoreByCustomer.size()-1));
 
         return creditScore.orElseThrow(()->{

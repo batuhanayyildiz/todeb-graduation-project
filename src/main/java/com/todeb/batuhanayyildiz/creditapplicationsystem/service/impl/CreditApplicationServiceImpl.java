@@ -1,10 +1,7 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplication;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplicationStatus;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.*;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditApplicationRepository;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditApplicationService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +21,8 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     private final CreditApplicationRepository creditApplicationRepository;
 
     private final CreditScoreServiceImpl creditScoreService;
+
+    private final CreditLimitServiceImpl creditLimitService;
 
 
 
@@ -68,6 +67,14 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
             creditApplication.setApplicationStatus(CreditApplicationStatus.ACCEPTED);
         }
 
+        return creditApplicationRepository.save(creditApplication);
+    }
+    public CreditApplication addCreditLimitToCreditApplicationByCustomerIdentityNo(Customer customer) {
+        log.info("Business logic is started");
+        CreditApplication creditApplication= getLastCreditApplicationByCustomer(customer);
+        CreditLimit creditLimit = creditLimitService.createCreditLimit(creditApplication);
+        creditApplication.getCreditLimits().add(creditLimit);
+        log.info("Business logic is completed");
         return creditApplicationRepository.save(creditApplication);
     }
 

@@ -1,10 +1,7 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplication;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplicationStatus;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditLimit;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.*;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditLimitRepository;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditLimitService;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +19,6 @@ public class CreditLimitServiceImpl implements CreditLimitService {
 
 
     private final CreditLimitRepository creditLimitRepository;
-
-    private final CreditApplicationServiceImpl creditApplicationService;
     private final CreditScoreServiceImpl creditScoreService;
     private final CustomerServiceImpl customerService;
 
@@ -39,26 +34,29 @@ public class CreditLimitServiceImpl implements CreditLimitService {
     }
 
     @Override
-    public double creditLimitCalculation(String identityNo) {
+    public CreditLimit createCreditLimit(CreditApplication creditApplication) {
+        log.info("method is started to use");
+        CreditLimit creditLimit =  new CreditLimit(creditApplication,0);
+        return creditLimitRepository.save(creditLimit);
+
+
+    }
+    @Override
+    public double creditLimitCalculation(String identityNo, CreditApplication creditApplication, CreditScore creditScore) {
         Customer customer = customerService.getCustomerByIdentityNo(identityNo);
-        CreditApplication creditApplication= creditApplicationService.getLastCreditApplicationByCustomer(customer);
         int monthlyIncome= customer.getMonthlyIncome();
-        int creditScore=creditScoreService.getLastCreditScoreByCustomer(customer).getScore();
+        int score=creditScore.getScore();
         if (creditApplication.getApplicationStatus() != CreditApplicationStatus.ACCEPTED){
             log.error("Application can not be evaluated");
         }
-        else if (creditScore<1000 && monthlyIncome<5000){
+        else if (score<1000 && monthlyIncome<5000){
             return 10000;
         }
-        else if (creditScore<1000 && monthlyIncome>=5000){
+        else if (score<1000 && monthlyIncome>=5000){
             return 20000;
         }
-        else if (creditScore>=1000){
-            return monthlyIncome*creditApplication.getCreditMultiplier();
-        }
 
-
-        return 0;
+        return monthlyIncome*creditApplication.getCreditMultiplier();
 
 
 

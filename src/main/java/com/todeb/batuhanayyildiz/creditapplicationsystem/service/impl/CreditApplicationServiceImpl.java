@@ -23,6 +23,9 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
 
     private final CreditApplicationRepository creditApplicationRepository;
 
+    private final CreditScoreServiceImpl creditScoreService;
+
+
 
     @Override
     public CreditApplication getCreditApplicationById(Long id) {
@@ -34,13 +37,14 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     }
 
     @Override
-    public CreditApplication getLastCreditApplicationByCustomerIdentityNo(String identityNo) {
+    public CreditApplication getLastCreditApplicationByCustomer(Customer customer) {
         List<CreditApplication> creditApplicationByIdentityNo = creditApplicationRepository.findAll().stream()
-                .filter(creditApplication -> creditApplication.getCustomer().getIdentityNo() == identityNo)
-                .sorted(getCreditApplicationComparator()).collect(Collectors.toList());
+                .filter(creditApplication -> creditApplication.getCustomer()==customer).collect(Collectors.toList());
         Optional<CreditApplication> creditApplication=Optional.of(creditApplicationByIdentityNo.get(creditApplicationByIdentityNo.size()-1));
+
         return creditApplication.orElseThrow(()->{
-            log.error("Credit Application is not found by identity number: "+identityNo);
+
+            //log.error("Credit Applications is not found by identity number: "+identityNo);
             return new NotFoundException("Credit Application");});
     }
 
@@ -51,6 +55,19 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
         CreditApplication creditApplication =  new CreditApplication(customer);
         return creditApplicationRepository.save(creditApplication);
 
+    }
+    @Override
+    public CreditApplication determineLastCreditApplicationStatusByCustomer(Customer customer) {
+        CreditApplication creditApplication = getLastCreditApplicationByCustomer(customer);
+        int customerCreditScore = creditScoreService.getLastCreditScoreByCustomer(customer).getScore();
+        if (customerCreditScore<500){
+            creditApplication.setApplicationStatus(CreditApplicationStatus.DENIED);
+        }
+        else{
+            creditApplication.setApplicationStatus(CreditApplicationStatus.ACCEPTED);
+        }
+
+        return creditApplicationRepository.save(creditApplication);
     }
 
     @Override
@@ -77,6 +94,9 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     public CreditApplication updateCreditApplicationByCustomerIdentityNo(String identityNo, CreditApplication creditApplication) {
         return null;
     }
+
+
+
 
     private Comparator<CreditApplication> getCreditApplicationComparator() {
         return (o1, o2) -> {

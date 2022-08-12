@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface CreditApplicationRepository extends JpaRepository<CreditApplication,Long> {
-
+    Optional<CreditApplication> findByCustomer_IdentityNo(String identityNo);
 
 }

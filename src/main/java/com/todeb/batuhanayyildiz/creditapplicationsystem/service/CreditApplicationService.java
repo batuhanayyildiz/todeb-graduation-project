@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface CreditApplicationService {
     CreditApplication getCreditApplicationById(Long id);
 
-    CreditApplication getLastCreditApplicationByCustomerIdentityNo(String identityNo);
+    CreditApplication getLastCreditApplicationByCustomer(Customer customer);
 
 
     CreditApplication createCreditApplication(Customer customer);
@@ -19,4 +19,7 @@ public interface CreditApplicationService {
     boolean deleteCreditApplication(Long id);
     boolean deleteCreditApplicationByCustomerIdentityNo(String identityNo);
     CreditApplication updateCreditApplicationByCustomerIdentityNo(String identityNo,CreditApplication creditApplication);
-}
+
+    CreditApplication determineLastCreditApplicationStatusByCustomer(Customer customer);
+
+    }

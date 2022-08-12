@@ -8,7 +8,8 @@ import java.util.List;
 public interface CreditScoreService {
 
     CreditScore getCreditScoreById(Long id);
-    CreditScore getCreditScoreByCustomerIdentityNo(String identityNo);
+    CreditScore getAllCreditScoresByCustomerIdentityNo(String identityNo);
+    CreditScore getLastCreditScoreByCustomer(Customer customer);
     List<CreditScore> getAllCreditScores();
     CreditScore createCreditScore(Customer customer);
 

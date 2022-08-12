@@ -1,6 +1,7 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplication;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditScoreRepository;
@@ -10,8 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,11 +33,24 @@ public class CreditScoreServiceImpl implements CreditScoreService {
 
     }
     @Override
-    public CreditScore getCreditScoreByCustomerIdentityNo(String identityNo) {
+    public CreditScore getAllCreditScoresByCustomerIdentityNo(String identityNo) {
         Optional<CreditScore> creditScoreByCustomerIdentityNo = creditScoreRepository.findByCustomer_IdentityNo(identityNo);
         return creditScoreByCustomerIdentityNo.orElseThrow(()->{
             log.error("CreditScore is not found by identity number: "+identityNo);
             return new NotFoundException("CreditScore");});
+    }
+
+
+    @Override
+    public CreditScore getLastCreditScoreByCustomer(Customer customer) {
+        List<CreditScore> creditScoreByCustomer = creditScoreRepository.findAll().stream()
+                .filter(creditScore -> creditScore.getCustomer()==customer).collect(Collectors.toList());
+        Optional<CreditScore> creditScore= Optional.of(creditScoreByCustomer.get(creditScoreByCustomer.size()-1));
+
+        return creditScore.orElseThrow(()->{
+
+            //log.error("Credit Score is not found by identity number: "+identityNo);
+            return new NotFoundException("Credit Score");});
     }
 
     @Override
@@ -95,6 +111,16 @@ public class CreditScoreServiceImpl implements CreditScoreService {
         int creditScore=(int)Math.round((Math.random()*1300)+100); // +100 is used if Math.random() gives 0.
         return creditScore;
 
+    }
+
+    private Comparator<CreditScore> getCreditScoreComparator() {
+        return (o1, o2) -> {
+            if (o1.getId() - o2.getId() < 0)
+                return -1;
+            if (o1.getId() - o2.getId() == 0)
+                return 0;
+            return 1;
+        };
     }
 
 

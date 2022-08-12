@@ -32,12 +32,7 @@ public class GenericExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Map> handleAccessDeniedException(AccessDeniedException exception){
-        Map<String,String> response = new HashMap<>();
-        response.put("error_message",exception.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map> handleException(Exception exception){

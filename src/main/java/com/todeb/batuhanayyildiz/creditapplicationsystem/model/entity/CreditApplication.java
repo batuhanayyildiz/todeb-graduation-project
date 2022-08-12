@@ -35,6 +35,9 @@ public class CreditApplication {
     private List<CreditLimit> creditLimits;
 
 
+    private int creditMultiplier;
+
+
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
@@ -43,6 +46,7 @@ public class CreditApplication {
     public CreditApplication(Customer customer){
         this.customer=customer;
         this.applicationStatus=CreditApplicationStatus.WAITING;
+        this.creditMultiplier=4;
     }
 
 

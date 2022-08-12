@@ -1,6 +1,7 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +18,15 @@ public class CreditLimit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int creditLimit;
-
+    private double creditLimit;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "credit_application_id", referencedColumnName = "id")
     private  CreditApplication creditApplication;
+
+    public CreditLimit(CreditApplication creditApplication) {
+        this.creditApplication=creditApplication;
+
+
+    }
 }

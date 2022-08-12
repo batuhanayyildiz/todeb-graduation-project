@@ -3,6 +3,7 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.controller;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.CustomerDTO;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CustomerMapper;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CreditApplicationServiceImpl;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CustomerServiceImpl;
 import org.mapstruct.factory.Mappers;
 import org.modelmapper.ModelMapper;
@@ -21,7 +22,10 @@ import java.util.stream.Collectors;
 public class CustomerController {
     @Autowired
     private CustomerServiceImpl customerService;
+
     private static final CustomerMapper CUSTOMER_MAPPER = Mappers.getMapper(CustomerMapper.class);
+
+
     @GetMapping
     public String welcome() {
         return "Welcome to Customer Service!";
@@ -85,6 +89,13 @@ public class CustomerController {
             @PathVariable String identityNo) {
         customerService.addCreditScoreToCustomerByIdentityNo(identityNo);
         return ResponseEntity.status(HttpStatus.OK).body("Related Credit Score was added to related Customer successfully");
+    }
+
+    @PutMapping("/add-credit-application/by-identity-number/{identityNo}")
+    public ResponseEntity addCreditApplicationToCustomerByIdentityNo(
+            @PathVariable String identityNo) {
+        customerService.addCreditApplicationToCustomerByIdentityNo(identityNo);
+        return ResponseEntity.status(HttpStatus.OK).body("Related Credit Application was added to related Customer successfully");
     }
 
 

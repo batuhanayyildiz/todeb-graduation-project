@@ -53,7 +53,7 @@ public class CreditApplicationController {
         creditApplicationService.addCreditLimitToCreditApplicationByCustomer(customerService.getCustomerByIdentityNo(identityNo));
         creditApplicationService.updateCreditLimitOfCreditApplicationByCustomer(customerService.getCustomerByIdentityNo(identityNo));
 
-        return ResponseEntity.status(HttpStatus.OK).body("Credit application successfully was determined successfully for related Customer");
+        return ResponseEntity.status(HttpStatus.OK).body("Credit application was determined successfully for related Customer");
     }
     @GetMapping("/view/application-result/{identityNo}")
     public ResponseEntity viewApplicationResultByCustomerIdentityNo(@PathVariable("identityNo") String identityNo){

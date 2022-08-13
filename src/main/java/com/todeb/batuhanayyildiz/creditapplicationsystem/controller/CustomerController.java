@@ -59,7 +59,7 @@ public class CustomerController {
         if (respCustomer == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Customer could not be created successfully");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(respCustomer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerDTO);
     }
 
     @DeleteMapping("/delete/by-id/")

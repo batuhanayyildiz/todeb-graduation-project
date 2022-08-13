@@ -48,6 +48,12 @@ public class CreditApplicationController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Credit Application was created for related Customer successfully");
     }
+    @GetMapping("/view/application-result/{identityNo}")
+    public ResponseEntity viewApplicationResultByCustomerIdentityNo(@PathVariable("identityNo") String identityNo){
+
+        return ResponseEntity.status(HttpStatus.OK).body(creditApplicationService
+                .viewCreditApplicationResultByCustomer(customerService.getCustomerByIdentityNo(identityNo)));
+    }
 
 
 

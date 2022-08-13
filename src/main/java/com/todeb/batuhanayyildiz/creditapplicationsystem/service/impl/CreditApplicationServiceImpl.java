@@ -102,6 +102,25 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
 
     }
 
+    public String viewCreditApplicationResultByCustomer(Customer customer){
+        log.info("Business logic is started");
+        CreditApplication creditApplication= getLastCreditApplicationByCustomer(customer);
+        CreditLimit creditLimit= creditLimitService.getLastCreditLimitByCreditApplication(creditApplication);
+        if (ObjectUtils.isEmpty(creditApplication)){
+            throw new NotFoundException("Credit Application");
+        }
+        if (ObjectUtils.isEmpty(creditLimit)){
+            throw new NotFoundException("Credit Limit");
+        }
+        String result = "Identity number: " + customer.getIdentityNo()+ " --- "
+                +"Name: "+customer.getName() + " --- "
+                +"Surname: "+customer.getSurname() + " --- "
+                +"Credit Result: " + creditApplication.getApplicationStatus().toString() + " --- "
+                +"Credit Limit: " + String.valueOf(creditLimit.getCreditLimit());
+        log.info("Business logic is completed");
+        return result;
+    }
+
 
 
     private Comparator<CreditApplication> getCreditApplicationComparator() {

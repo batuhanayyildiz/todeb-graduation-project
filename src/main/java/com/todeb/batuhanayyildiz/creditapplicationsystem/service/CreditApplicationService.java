@@ -17,4 +17,5 @@ public interface CreditApplicationService {
 
     CreditApplication determineLastCreditApplicationStatusByCustomer(Customer customer);
     CreditApplication addCreditLimitToCreditApplicationByCustomer(Customer customer);
+    String viewCreditApplicationResultByCustomer( Customer customer);
     }

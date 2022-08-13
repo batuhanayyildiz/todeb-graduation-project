@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Validated
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
@@ -28,12 +30,13 @@ public class CustomerController {
 
     private static final CustomerMapper CUSTOMER_MAPPER = Mappers.getMapper(CustomerMapper.class);
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
     @GetMapping
     public String welcome() {
         return "Welcome to Customer Service!";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity getAllCustomers(){
         List<Customer> allCustomers= customerService.getAllCustomers();
@@ -41,17 +44,21 @@ public class CustomerController {
         return ResponseEntity.ok(allCustomersDTO);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/get/by-id/{id}")
     public ResponseEntity getCustomerById(@PathVariable("id") Long id){
         Customer byId = customerService.getCustomerById(id);
         return ResponseEntity.status(HttpStatus.OK).body(CUSTOMER_MAPPER.toDto(byId));
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/get/by-identity-number/{identityNo}")
     public ResponseEntity getCustomerByIdentityNo(@PathVariable("identityNo") String identityNo){
         Customer byId = customerService.getCustomerByIdentityNo(identityNo);
         return ResponseEntity.status(HttpStatus.OK).body(CUSTOMER_MAPPER.toDto(byId));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
     public ResponseEntity createNewCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         Customer respCustomer = customerService.createCustomer(CUSTOMER_MAPPER.toEntity(customerDTO));
@@ -62,18 +69,21 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerDTO);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/by-id/")
     public ResponseEntity deleteCustomerById(@RequestParam(name="id") Long id){
         customerService.deleteCustomerById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Related Customer is deleted successfully");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/by-identity-number/")
     public ResponseEntity deleteCustomerById(@RequestParam(name="identityNo") String identityNo){
         customerService.deleteCustomerByIdentityNo(identityNo);
         return ResponseEntity.status(HttpStatus.OK).body("Related Customer is deleted successfully");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update/by-identity-number/{identityNo}")
     public ResponseEntity updateCustomerByIdentityNo(@Valid
             @PathVariable String identityNo,
@@ -86,6 +96,7 @@ public class CustomerController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/add/credit-score/by-identity-number/{identityNo}")
     public ResponseEntity addCreditScoreToCustomerByIdentityNo(
             @PathVariable String identityNo) {
@@ -93,6 +104,7 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body("Related Credit Score was added to related Customer successfully");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/add/credit-application/by-identity-number/{identityNo}")
     public ResponseEntity addCreditApplicationToCustomerByIdentityNo(
             @PathVariable String identityNo) {

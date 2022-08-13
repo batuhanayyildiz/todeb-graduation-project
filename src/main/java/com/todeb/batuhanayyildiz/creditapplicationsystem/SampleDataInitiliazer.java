@@ -32,9 +32,9 @@ public class SampleDataInitiliazer implements ApplicationRunner {
         }
 
         // Creating a sample USER
-        User sampleUser = new User("client-user", "clientuser@mail.com", "pass");
-        if (!userRepository.existsByUsername(sampleUser.getUsername())) {
-            userService.signup(sampleUser, false);
+        User customerUser = new User("customer-user", "customeruser@mail.com", "pass");
+        if (!userRepository.existsByUsername(customerUser.getUsername())) {
+            userService.signup(customerUser, false);
         }
 
     }

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WelcomeController {
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_CLIENT')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_CUSTOMER')")
     @GetMapping("/welcome")
     public ResponseEntity welcomeMessageApi(){
-       String welcomeMsg= "Welcome to Library Automation Application";
+       String welcomeMsg= "Welcome to Credit Application System";
        ResponseModel responseModel= new ResponseModel();
        responseModel.setWelcomeMessage((welcomeMsg));
        return ResponseEntity.status(HttpStatus.OK).body(responseModel);

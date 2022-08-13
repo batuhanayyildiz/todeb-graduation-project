@@ -16,7 +16,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
@@ -35,17 +34,7 @@ public class UserService {
 
     private final AuthenticationManager authenticationManager;
 
-    //    @PostConstruct
-//    private void postConstruct() {
-//        // Sample test admin user insert
-//        User admin = new User();
-//        admin.setUsername("admin-rmzn");
-//        admin.setPassword("pass12345");
-//        admin.setEmail("admin@email.com");
-//        admin.setRoles(Collections.singletonList(roleRepository.getById(1)));
-//        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-//        userRepository.save(admin);
-//    }
+
     public List<User> getAll() {
         return userRepository.findAll();
     }
@@ -64,7 +53,7 @@ public class UserService {
         if (!userRepository.existsByUsername(user.getUsername())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
 //          Optional<Role> relatedRole = roleRepository.findByName(isAdmin ? "ROLE_ADMIN" : "ROLE_USER");
-            Role role = isAdmin ? Role.ROLE_ADMIN : Role.ROLE_CLIENT;
+            Role role = isAdmin ? Role.ROLE_ADMIN : Role.ROLE_CUSTOMER;
             user.setRoles(Collections.singletonList(role));
             userRepository.save(user);
             return jwtTokenProvider.createToken(user.getUsername(), user.getRoles());

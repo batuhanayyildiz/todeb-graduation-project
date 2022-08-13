@@ -25,7 +25,7 @@ public class CreditApplicationController {
     private CustomerServiceImpl customerService;
     private static final CreditApplicationMapper CREDIT_APPLICATION_MAPPER = Mappers.getMapper(CreditApplicationMapper.class);
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
     @GetMapping
     public String welcome() {
         return "Welcome to Credit Application Service!";
@@ -60,7 +60,7 @@ public class CreditApplicationController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Credit application was determined successfully for related Customer");
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
     @GetMapping("/view/application-result/{identityNo}")
     public ResponseEntity viewApplicationResultByCustomerIdentityNo(@PathVariable("identityNo") String identityNo){
         return ResponseEntity.status(HttpStatus.OK).body(creditApplicationService

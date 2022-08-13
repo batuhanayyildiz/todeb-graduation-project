@@ -85,7 +85,7 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(update);
 
     }
-    // For testing corresponding service methods with controller
+
     @PutMapping("/add/credit-score/by-identity-number/{identityNo}")
     public ResponseEntity addCreditScoreToCustomerByIdentityNo(
             @PathVariable String identityNo) {

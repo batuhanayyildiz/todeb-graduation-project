@@ -35,6 +35,16 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
             return new NotFoundException("Credit Application");});
 
     }
+    public List<CreditApplication> getAllCreditApplicationsOfCustomerByCustomer(Customer customer) {
+        List<CreditApplication> creditApplicationByCustomer = creditApplicationRepository.findAll().stream()
+                .filter(creditApplication -> creditApplication.getCustomer()==customer).collect(Collectors.toList());
+        if (creditApplicationByCustomer.size()<1){
+            throw new NotFoundException("Credit Application");
+        }
+        return creditApplicationByCustomer;
+
+
+    }
 
     @Override
     public CreditApplication getLastCreditApplicationByCustomer(Customer customer) {

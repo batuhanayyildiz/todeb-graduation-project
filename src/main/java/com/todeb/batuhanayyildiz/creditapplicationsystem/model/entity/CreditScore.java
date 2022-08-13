@@ -19,8 +19,9 @@ import javax.persistence.*;
 public class CreditScore {
 
     // This entity takes its value from different service.
-    // Therefore, creation of this value directly in another complex entity can cause problems related with dependencies.
+    // Therefore, creation of this value as a variable directly in another complex entity can cause problems related with dependencies.
     // To prevent that , it is created as seperated entity, not as a variable.
+    // Also, by doing it, an application ,which is more suitable for expansion, is aimed.
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

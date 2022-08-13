@@ -13,7 +13,11 @@ import javax.persistence.*;
 @Data
 @Entity
 public class CreditLimit {
-    // It is created as seperated entity because when application expands, this area can be more complex
+
+    // an application ,which is more suitable for expansion, is aimed.
+    // It is created as seperated entity because if application expands, there is possibility for being more complex for Credit Limit.
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface CreditApplicationService {
     CreditApplication getCreditApplicationById(Long id);
+    List<CreditApplication>getAllCreditApplicationsOfCustomerByCustomer(Customer customer);
 
     CreditApplication getLastCreditApplicationByCustomer(Customer customer);
 

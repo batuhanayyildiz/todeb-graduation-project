@@ -5,6 +5,7 @@ import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CustomerMapper;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CreditApplicationServiceImpl;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CustomerServiceImpl;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.SmsServiceImpl;
 import org.mapstruct.factory.Mappers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 public class CustomerController {
     @Autowired
     private CustomerServiceImpl customerService;
+    @Autowired
+    private SmsServiceImpl smsService;
 
     private static final CustomerMapper CUSTOMER_MAPPER = Mappers.getMapper(CustomerMapper.class);
 
@@ -82,19 +85,6 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(update);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
     // For testing corresponding service methods with controller
     @PutMapping("/add/credit-score/by-identity-number/{identityNo}")
     public ResponseEntity addCreditScoreToCustomerByIdentityNo(
@@ -107,7 +97,9 @@ public class CustomerController {
     public ResponseEntity addCreditApplicationToCustomerByIdentityNo(
             @PathVariable String identityNo) {
         customerService.addCreditApplicationToCustomerByIdentityNo(identityNo);
-        return ResponseEntity.status(HttpStatus.OK).body("Related Credit Application was added to related Customer successfully");
+        return ResponseEntity.status(HttpStatus.OK).
+                body("Related Credit Application was created for related Customer successfully"
+                                +" and "+smsService.sendNotificationByCustomer(customerService.getCustomerByIdentityNo(identityNo)));
     }
 
 

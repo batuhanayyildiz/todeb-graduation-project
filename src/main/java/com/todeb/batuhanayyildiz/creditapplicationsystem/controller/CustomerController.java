@@ -51,7 +51,6 @@ public class CustomerController {
 
     @PostMapping("/create")
     public ResponseEntity createNewCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
-
         Customer respCustomer = customerService.createCustomer(CUSTOMER_MAPPER.toEntity(customerDTO));
 
         if (respCustomer == null) {

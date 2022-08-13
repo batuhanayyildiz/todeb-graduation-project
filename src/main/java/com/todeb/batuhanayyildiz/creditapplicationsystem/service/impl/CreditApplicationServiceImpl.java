@@ -7,6 +7,7 @@ import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditApplicati
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Comparator;
 import java.util.List;
@@ -40,7 +41,11 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
         List<CreditApplication> creditApplicationByIdentityNo = creditApplicationRepository.findAll().stream()
                 .filter(creditApplication -> creditApplication.getCustomer()==customer)
                 .sorted(getCreditApplicationComparator()).collect(Collectors.toList());
+        if (creditApplicationByIdentityNo.size()<1){
+            throw new NotFoundException("Credit Application");
+        }
         Optional<CreditApplication> creditApplication=Optional.of(creditApplicationByIdentityNo.get(creditApplicationByIdentityNo.size()-1));
+
 
         return creditApplication.orElseThrow(()->{
 
@@ -60,15 +65,20 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     public CreditApplication determineLastCreditApplicationStatusByCustomer(Customer customer) {
         log.info("Business logic is started");
         CreditApplication creditApplication = getLastCreditApplicationByCustomer(customer);
-        int customerCreditScore = creditScoreService.getLastCreditScoreByCustomer(customer).getScore();
-        if (customerCreditScore<500){
-            creditApplication.setApplicationStatus(CreditApplicationStatus.DENIED);
-        }
-        else{
-            creditApplication.setApplicationStatus(CreditApplicationStatus.ACCEPTED);
-        }
-        log.info("Business logic is completed");
-        return creditApplicationRepository.save(creditApplication);
+        if(!ObjectUtils.isEmpty(creditApplication)){
+            int customerCreditScore = creditScoreService.getLastCreditScoreByCustomer(customer).getScore();
+            if (customerCreditScore<500){
+                creditApplication.setApplicationStatus(CreditApplicationStatus.DENIED);
+            }
+            else{
+                creditApplication.setApplicationStatus(CreditApplicationStatus.ACCEPTED);
+            }
+            log.info("Business logic is completed");
+            return creditApplicationRepository.save(creditApplication);
+        }else throw new NotFoundException("Credit Score with related customer");
+
+
+
     }
     public CreditApplication addCreditLimitToCreditApplicationByCustomer(Customer customer) {
         log.info("Business logic is started");

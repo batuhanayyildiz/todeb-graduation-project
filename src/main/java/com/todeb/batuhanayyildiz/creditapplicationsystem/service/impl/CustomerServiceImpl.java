@@ -116,10 +116,14 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer addCreditScoreToCustomerByIdentityNo(String identityNo){
         log.info("Business logic is started");
         Customer customer= getCustomerByIdentityNo(identityNo);
-        CreditScore creditScore = creditScoreService.createCreditScore(customer);
-        customer.getCreditScores().add(creditScore);
-        log.info("Business logic is completed");
-        return customerRepository.save(customer);
+        if(!ObjectUtils.isEmpty(customer)){
+            CreditScore creditScore = creditScoreService.createCreditScore(customer);
+            customer.getCreditScores().add(creditScore);
+            log.info("Business logic is completed");
+            return customerRepository.save(customer);
+        }
+        else throw new NotFoundException("Customer");
+
 
     }
 
@@ -127,10 +131,15 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer addCreditApplicationToCustomerByIdentityNo(String identityNo) {
         log.info("Business logic is started");
         Customer customer= getCustomerByIdentityNo(identityNo);
-        CreditApplication creditApplication = creditApplicationService.createCreditApplication(customer);
-        customer.getCreditApplications().add(creditApplication);
-        log.info("Business logic is completed");
-        return customerRepository.save(customer);
+        if(!ObjectUtils.isEmpty(customer.getCreditScores())){
+            CreditApplication creditApplication = creditApplicationService.createCreditApplication(customer);
+            customer.getCreditApplications().add(creditApplication);
+            log.info("Business logic is completed");
+            return customerRepository.save(customer);
+        }
+        else throw new NotFoundException("Credit Score with related customer");
+
+
     }
 
 

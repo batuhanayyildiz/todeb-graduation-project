@@ -47,11 +47,11 @@ public class Customer {
     private String phoneNo;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<CreditScore> creditScores;
 
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<CreditApplication> creditApplications;
 
 

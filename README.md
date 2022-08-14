@@ -6,6 +6,7 @@
 - JPA and PostGreSql
 - Java Spring Security
 - Json WebToken V0.4
+- Junit 4.13.2
 - Swagger V3
 - Lombok
 - ModelMapper V2.4.5

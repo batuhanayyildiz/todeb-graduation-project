@@ -43,14 +43,19 @@ public class CreditScoreServiceImpl implements CreditScoreService {
 
     @Override
     public CreditScore getLastCreditScoreByCustomer(Customer customer) {
+        log.info("Business logic of getLastCreditScoreByCustomer starts");
         List<CreditScore> creditScoreByCustomer = creditScoreRepository.findAll().stream()
                 .filter(creditScore -> creditScore.getCustomer()==customer)
                 .sorted(getCreditScoreComparator()).collect(Collectors.toList());
+        if (creditScoreByCustomer.size()<1){
+            log.error("Credit Score is not found by customer");
+            throw new NotFoundException("Credit Score");
+        }
         Optional<CreditScore> creditScore= Optional.of(creditScoreByCustomer.get(creditScoreByCustomer.size()-1));
 
         return creditScore.orElseThrow(()->{
 
-            //log.error("Credit Score is not found by identity number: "+identityNo);
+            log.error("Credit Score is not found");
             return new NotFoundException("Credit Score");});
     }
 

@@ -130,23 +130,32 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
 
     public String viewCreditApplicationResultByCustomer(Customer customer){
         log.info("Business logic of viewCreditApplicationResultByCustomer method starts");
+        String result="";
         CreditApplication creditApplication= getLastCreditApplicationByCustomer(customer);
-        CreditLimit creditLimit= creditLimitService.getLastCreditLimitByCreditApplication(creditApplication);
         if (ObjectUtils.isEmpty(creditApplication)){
             log.error("Credit Application is not found");
             throw new NotFoundException("Credit Application");
         }
-        if (ObjectUtils.isEmpty(creditLimit)){
-            log.error("Credit Limit is not found");
-            throw new NotFoundException("Credit Limit");
+        if (creditApplication.getCreditLimits().isEmpty()){
+            result = "Identity number: " + customer.getIdentityNo()+ " --- "
+                    +"Name: "+customer.getName() + " --- "
+                    +"Surname: "+customer.getSurname() + " --- "
+                    +"Credit Result: " + creditApplication.getApplicationStatus().toString() + " --- "
+                    +"Credit Limit: " + " Adjusting process is not ended";
+
+            log.error("Credit Limit is not found. ");
         }
-        String result = "Identity number: " + customer.getIdentityNo()+ " --- "
-                +"Name: "+customer.getName() + " --- "
-                +"Surname: "+customer.getSurname() + " --- "
-                +"Credit Result: " + creditApplication.getApplicationStatus().toString() + " --- "
-                +"Credit Limit: " + String.valueOf(creditLimit.getCreditLimit());
-        log.info("Business logic of viewCreditApplicationResultByCustomer method ends");
+        else {
+            CreditLimit creditLimit= creditLimitService.getLastCreditLimitByCreditApplication(creditApplication);
+            result = "Identity number: " + customer.getIdentityNo() + " --- "
+                    + "Name: " + customer.getName() + " --- "
+                    + "Surname: " + customer.getSurname() + " --- "
+                    + "Credit Result: " + creditApplication.getApplicationStatus().toString() + " --- "
+                    + "Credit Limit: " + String.valueOf(creditLimit.getCreditLimit());
+            log.info("Business logic of viewCreditApplicationResultByCustomer method ends");
+        }
         return result;
+
     }
 
 

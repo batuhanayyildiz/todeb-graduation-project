@@ -35,15 +35,23 @@ public class CreditLimitServiceImpl implements CreditLimitService {
     }
     @Override
     public CreditLimit getLastCreditLimitByCreditApplication(CreditApplication creditApplication) {
+        log.info("Business logic of getLastCreditLimitByCreditApplication starts");
         List<CreditLimit> creditLimitByCreditApplication = creditLimitRepository.findAll().stream()
                 .filter(creditLimit-> creditLimit.getCreditApplication()==creditApplication)
                 .sorted(getCreditLimitComparator()).collect(Collectors.toList());
+        if (creditLimitByCreditApplication.size()<1){
+            log.error("Credit Limit is not found by customer");
+            throw new NotFoundException("Credit Limit");
+        }
         Optional<CreditLimit> creditLimit= Optional.of(creditLimitByCreditApplication.get(creditLimitByCreditApplication.size()-1));
 
         return creditLimit.orElseThrow(()->{
             log.error("Credit Limit is not found by customer");
             return new NotFoundException("Credit Limit");});
+
+
     }
+
     @Override
     public CreditLimit createCreditLimit(CreditApplication creditApplication) {
         log.info("method is started to use");

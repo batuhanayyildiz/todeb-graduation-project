@@ -1,8 +1,10 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
+import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CanApplyConditionException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CustomJwtException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplication;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplicationStatus;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CustomerRepository;
@@ -131,13 +133,29 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer addCreditApplicationToCustomerByIdentityNo(String identityNo) {
         log.info("Business logic is started");
         Customer customer= getCustomerByIdentityNo(identityNo);
-        if(!ObjectUtils.isEmpty(customer.getCreditScores())){
+        if (customerCanApplyForCredit(customer)){
+            log.info("canApply is true");
             CreditApplication creditApplication = creditApplicationService.createCreditApplication(customer);
             customer.getCreditApplications().add(creditApplication);
-            log.info("Business logic is completed");
             return customerRepository.save(customer);
+
         }
-        else throw new NotFoundException("Credit Score with related customer");
+        else throw new CanApplyConditionException("New application can not be done. " +
+                    "Please wait for the previous application to be finalized ");
+
+    }
+    @Override
+    public boolean customerCanApplyForCredit(Customer customer){
+
+        if(customer.getCreditApplications().size()<1){
+            return true;
+        }
+        CreditApplication creditApplication= creditApplicationService.getLastCreditApplicationByCustomer(customer);
+        if(creditApplication.getApplicationStatus()== CreditApplicationStatus.WAITING){
+            return false;
+        }
+
+        return true;
 
 
     }

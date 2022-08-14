@@ -69,21 +69,6 @@ public class CreditApplicationController {
 
 
 
-    /*
-    @GetMapping("/get-by-identity-number/{identityNo}")
-    public ResponseEntity getCreditApplicationByCustomerIdentityNo(@PathVariable("identityNo") String identityNo){
-        CreditApplication byId = creditApplicationService.getLastCreditApplicationByCustomerIdentityNo(identityNo);
-        return ResponseEntity.status(HttpStatus.OK).body(CREDIT_APPLICATION_MAPPER.toDto(byId));
-    }
-*/
-
-/*    @PutMapping("/create/by-identity-number/{identityNo}")
-    public ResponseEntity createApplicationByCustomerIdentityNo(@PathVariable("identityNo") String identityNo){
-        customerService.addCreditApplicationToCustomerByIdentityNo(identityNo);
-        return ResponseEntity.status(HttpStatus.OK).body("Credit Application was created for related Customer successfully");
-    }
-*/
-
 
 
 

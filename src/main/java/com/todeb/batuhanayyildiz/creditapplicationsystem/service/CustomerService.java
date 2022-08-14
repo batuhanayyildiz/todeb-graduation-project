@@ -18,6 +18,8 @@ public interface CustomerService {
     Customer addCreditScoreToCustomerByIdentityNo(String identityNo);
     Customer addCreditApplicationToCustomerByIdentityNo(String identityNo);
 
+    boolean customerCanApplyForCredit(Customer customer);
+
 
 
 

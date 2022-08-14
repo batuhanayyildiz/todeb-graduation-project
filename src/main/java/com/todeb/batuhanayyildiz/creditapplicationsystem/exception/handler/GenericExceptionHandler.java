@@ -1,6 +1,7 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.exception.handler;
 
 
+import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CanApplyConditionException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CustomJwtException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,12 @@ public class GenericExceptionHandler {
         Map<String,String> response =new HashMap<>();
         response.put("error_message", exception.getMessage());
         response.put("error_status", exception.getHttpStatus().toString());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+    @ExceptionHandler(CanApplyConditionException.class)
+    public ResponseEntity<Map> handleCanApplyConditionException(CanApplyConditionException exception){
+        Map<String,String> response =new HashMap<>();
+        response.put("error_message", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 

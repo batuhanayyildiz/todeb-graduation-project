@@ -71,35 +71,21 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean deleteCustomerById(Long id) {
+    public void deleteCustomerById(Long id) {
         log.info("Business logic of deleteCustomerById starts");
-        Customer customer=getCustomerById(id);
-        if(!ObjectUtils.isEmpty(customer)){
-            log.info("in if condition");
-            customerRepository.delete(getCustomerById(id));
-            return true;
-        }
-        else throw new NotFoundException("id"+""+id.toString());
-
+        getCustomerById(id);
+        log.info("Business logic of deleteCustomerById ends");
+        customerRepository.deleteById(id);
 
     }
     @Override
-    public boolean deleteCustomerByIdentityNo(String identityNo){
+    public void deleteCustomerByIdentityNo(String identityNo) {
         log.info("Business logic of deleteCustomerByIdentityNo starts");
         Optional<Customer> customerByIdentityNo = customerRepository.findByIdentityNo(identityNo);
-        Customer customer=customerByIdentityNo.get();
-        Long id=customer.getId();
-        if(!ObjectUtils.isEmpty(customerByIdentityNo)){
-            log.info("in if condition");
-            customerRepository.delete(getCustomerById(id));
-            log.info("\"Business logic of deleteCustomerByIdentityNo ends");
-            return true;
-        }
-        else {
-            log.error("Id is not found");
-            throw new NotFoundException("id"+""+id.toString());}
-
+        customerRepository.deleteById(customerByIdentityNo.get().getId());
+        log.info("\"Business logic of deleteCustomerByIdentityNo ends");
     }
+
 
     @Override
     public Customer updateCustomerByIdentityNo(String identityNo,Customer customer) {
@@ -118,7 +104,6 @@ public class CustomerServiceImpl implements CustomerService {
 
         if (!ObjectUtils.isEmpty(customer.getPhoneNo())){
             updatedCustomer.setPhoneNo(customer.getPhoneNo());}
-
 
         if (!ObjectUtils.isEmpty(customer.getMonthlyIncome())){
             updatedCustomer.setMonthlyIncome(customer.getMonthlyIncome());}

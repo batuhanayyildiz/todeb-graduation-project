@@ -27,17 +27,14 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     private final CreditLimitServiceImpl creditLimitService;
 
 
-
     @Override
-    public CreditApplication getCreditApplicationById(Long id) {
-        log.info("Business logic of getCreditApplicationById method starts");
-        Optional<CreditApplication> byId = creditApplicationRepository.findById(id);
-        log.info("Business logic of getCreditApplicationById method ends");
-        return byId.orElseThrow(()->{
-            log.error("Credit Application is not found by id "+id);
-            return new NotFoundException("Credit Application");});
-
+    public List<CreditApplication> getAllCreditApplications() {
+        log.info("Business logic of getAllCreditApplications method starts");
+        List<CreditApplication> creditApplications= creditApplicationRepository.findAll();
+        log.info("Business logic of getAllCreditApplications method ends");
+        return creditApplications;
     }
+    @Override
     public List<CreditApplication> getAllCreditApplicationsOfCustomerByCustomer(Customer customer) {
         log.info("Business logic of getAllCreditApplicationsOfCustomerByCustomer method starts");
         List<CreditApplication> creditApplicationByCustomer = creditApplicationRepository.findAll().stream()
@@ -51,6 +48,18 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
 
 
     }
+
+    @Override
+    public CreditApplication getCreditApplicationById(Long id) {
+        log.info("Business logic of getCreditApplicationById method starts");
+        Optional<CreditApplication> byId = creditApplicationRepository.findById(id);
+        log.info("Business logic of getCreditApplicationById method ends");
+        return byId.orElseThrow(()->{
+            log.error("Credit Application is not found by id "+id);
+            return new NotFoundException("Credit Application");});
+
+    }
+
 
     @Override
     public CreditApplication getLastCreditApplicationByCustomer(Customer customer) {

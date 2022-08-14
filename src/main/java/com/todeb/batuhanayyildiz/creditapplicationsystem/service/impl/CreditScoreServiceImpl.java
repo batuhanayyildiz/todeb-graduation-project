@@ -114,6 +114,7 @@ public class CreditScoreServiceImpl implements CreditScoreService {
 
     @Override
     public int creditScoreCalculation() {
+        log.info("Business logic of creditScoreCalculation starts");
         int creditScore=(int)Math.round((Math.random()*1300)+100); // +100 is used if Math.random() gives 0.
         return creditScore;
 

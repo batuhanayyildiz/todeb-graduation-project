@@ -32,6 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCustomerById(Long id) {
+        log.info("Business logic of getCustomerById starts");
         Optional<Customer> byId = customerRepository.findById(id);
         return byId.orElseThrow(()->{
             log.error("Customer is not found by id "+id);
@@ -40,6 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
     @Override
     public Customer getCustomerByIdentityNo(String identityNo) {
+        log.info("Business logic of getCustomerByIdentityNo starts");
         Optional<Customer> customerByIdentityNo = customerRepository.findByIdentityNo(identityNo);
         return customerByIdentityNo.orElseThrow(()->{
             log.error("Customer is not found by identity number: "+identityNo);
@@ -53,8 +55,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer createCustomer(Customer customer) {
-        log.info("method is started to use");
+        log.info("Business logic of createCustomer starts");
         if (!customerRepository.existsByIdentityNo(customer.getIdentityNo())){
+            log.info("Business logic of createCustomer ends");
             return customerRepository.save(customer);
         }
         else {
@@ -63,10 +66,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
+
+
     }
 
     @Override
     public boolean deleteCustomerById(Long id) {
+        log.info("Business logic of deleteCustomerById starts");
         Customer customer=getCustomerById(id);
         if(!ObjectUtils.isEmpty(customer)){
             log.info("in if condition");
@@ -79,22 +85,28 @@ public class CustomerServiceImpl implements CustomerService {
     }
     @Override
     public boolean deleteCustomerByIdentityNo(String identityNo){
+        log.info("Business logic of deleteCustomerByIdentityNo starts");
         Optional<Customer> customerByIdentityNo = customerRepository.findByIdentityNo(identityNo);
         Customer customer=customerByIdentityNo.get();
         Long id=customer.getId();
         if(!ObjectUtils.isEmpty(customerByIdentityNo)){
             log.info("in if condition");
             customerRepository.delete(getCustomerById(id));
+            log.info("\"Business logic of deleteCustomerByIdentityNo ends");
             return true;
         }
-        else throw new NotFoundException("id"+""+id.toString());
+        else {
+            log.error("Id is not found");
+            throw new NotFoundException("id"+""+id.toString());}
 
     }
 
     @Override
     public Customer updateCustomerByIdentityNo(String identityNo,Customer customer) {
+        log.info("Business logic of updateCustomerByIdentityNo starts");
         Optional<Customer> customerByIdentityNo = customerRepository.findByIdentityNo(identityNo);
         if (!customerByIdentityNo.isPresent()) {
+            log.error("Customer is not found");
             throw new NotFoundException("Customer");
         }
         Customer updatedCustomer = customerByIdentityNo.get();
@@ -111,12 +123,12 @@ public class CustomerServiceImpl implements CustomerService {
         if (!ObjectUtils.isEmpty(customer.getMonthlyIncome())){
             updatedCustomer.setMonthlyIncome(customer.getMonthlyIncome());}
 
-
+        log.info("Business logic of updateCustomerByIdentityNo ends");
         return customerRepository.save(updatedCustomer);
     }
     @Override
     public Customer addCreditScoreToCustomerByIdentityNo(String identityNo){
-        log.info("Business logic is started");
+        log.info("Business logic of addCreditScoreToCustomerByIdentityNo starts");
         Customer customer= getCustomerByIdentityNo(identityNo);
         if(!ObjectUtils.isEmpty(customer)){
             CreditScore creditScore = creditScoreService.createCreditScore(customer);
@@ -131,7 +143,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer addCreditApplicationToCustomerByIdentityNo(String identityNo) {
-        log.info("Business logic is started");
+        log.info("Business logic of addCreditApplicationToCustomerByIdentityNo starts");
         Customer customer= getCustomerByIdentityNo(identityNo);
         if (customerCanApplyForCredit(customer)){
             log.info("canApply is true");
@@ -140,13 +152,16 @@ public class CustomerServiceImpl implements CustomerService {
             return customerRepository.save(customer);
 
         }
-        else throw new CanApplyConditionException("New application can not be done. " +
+        else {
+            log.error("canApplyCondition error");
+            throw new CanApplyConditionException("New application can not be done. " +
                     "Please wait for the previous application to be finalized ");
+        }
 
     }
     @Override
     public boolean customerCanApplyForCredit(Customer customer){
-
+        log.info("Business logic of customerCanApplyForCredit starts");
         if(customer.getCreditApplications().size()<1){
             return true;
         }

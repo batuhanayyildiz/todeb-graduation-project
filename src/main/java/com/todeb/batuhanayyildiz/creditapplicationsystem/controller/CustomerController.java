@@ -28,8 +28,7 @@ public class CustomerController {
     private CustomerServiceImpl customerService;
     @Autowired
     private CreditScoreServiceImpl creditScoreService;
-    @Autowired
-    private SmsServiceImpl smsService;
+
 
     private static final CustomerMapper CUSTOMER_MAPPER = Mappers.getMapper(CustomerMapper.class);
 

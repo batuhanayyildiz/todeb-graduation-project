@@ -214,14 +214,7 @@ class CustomerServiceImplTest {
         Assert.assertEquals(customerExpected.getPhoneNo(), actualCustomer.getPhoneNo());
     }
 
-    @Ignore
-    @Test
-    void addCreditApplicationToCustomerByIdentityNo() {
-    }
-    @Ignore
-    @Test
-    void customerCanApplyForCredit() {
-    }
+
 
     private List<Customer> getSampleTestCustomers() {
         List<Customer> sampleList = new ArrayList<>();

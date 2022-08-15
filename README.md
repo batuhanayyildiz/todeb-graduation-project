@@ -24,13 +24,13 @@
 ---> by following this URI --> "/api/application/view/application-result/{identityNo}"
 
 ### Second Type
-1. Customer or Admin enters informations of customer and credit score is added automatically.<br />
+1. Customer or Admin enters informations of customer and credit score is added automatically.<br /><br />
 ---> by following this URI --> "/api/customer/create"<br /><br />
-2. Bank can add new credit score.<br />
+2. Bank can add new credit score.<br /><br />
 ---> by following this URI --> "/api/customer/add/credit-score/{identityNo}"<br /><br />
-3. Bank can add new credit application.<br />
+3. Bank can add new credit application.<br /><br />
 ---> by following this URI --> "/api/application/add/credit-application/by-identity-number/{identityNo}"<br /><br />
-4. Bank determines the result of application.<br />
+4. Bank determines the result of application.<br /><br />
 ---> by following this URI --> "/api/application/determine/result/by-identity-number/{identityNo}"<br /><br />
 5. Customer can view result with identity number after credit application is created.<br /><br />
 ---> by following this URI --> "/api/application/view/application-result/{identityNo}"

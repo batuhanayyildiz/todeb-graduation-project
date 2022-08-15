@@ -24,6 +24,7 @@ public class CreditScoreServiceImpl implements CreditScoreService {
 
 
 
+
     @Override
     public CreditScore getCreditScoreById(Long id) {
         Optional<CreditScore> byId = creditScoreRepository.findById(id);
@@ -64,14 +65,6 @@ public class CreditScoreServiceImpl implements CreditScoreService {
         return creditScoreRepository.findAll();
     }
 
-    @Override
-    public CreditScore createCreditScore(Customer customer) {
-        log.info("method is started to use");
-        CreditScore creditScore =  new CreditScore(customer,creditScoreCalculation());
-        return creditScoreRepository.save(creditScore);
-
-
-    }
 
     @Override
     public boolean deleteCreditScore(Long id) {
@@ -117,6 +110,20 @@ public class CreditScoreServiceImpl implements CreditScoreService {
         log.info("Business logic of creditScoreCalculation starts");
         int creditScore=(int)Math.round((Math.random()*1300)+100); // +100 is used if Math.random() gives 0.
         return creditScore;
+
+    }
+    @Override
+    public CreditScore addCreditScoreToCustomerByCustomer(Customer customer){
+        log.info("Business logic of addCreditScoreToCustomerByCustomer starts");
+        if(!ObjectUtils.isEmpty(customer)){
+            log.info("method is started to use");
+            CreditScore creditScore =  new CreditScore(customer,creditScoreCalculation());
+            log.info("Business logic is completed");
+            return creditScoreRepository.save(creditScore);
+
+        }
+        else throw new NotFoundException("Customer");
+
 
     }
 

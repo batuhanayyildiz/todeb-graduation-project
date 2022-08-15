@@ -52,14 +52,7 @@ public class CreditLimitServiceImpl implements CreditLimitService {
 
     }
 
-    @Override
-    public CreditLimit createCreditLimit(CreditApplication creditApplication) {
-        log.info("method is started to use");
-        CreditLimit creditLimit =  new CreditLimit(creditApplication,0);
-        return creditLimitRepository.save(creditLimit);
 
-
-    }
     @Override
     public double creditLimitCalculation(Customer customer, CreditApplication creditApplication, CreditScore creditScore) {
         int monthlyIncome= customer.getMonthlyIncome();
@@ -82,6 +75,15 @@ public class CreditLimitServiceImpl implements CreditLimitService {
 
 
     }
+
+    @Override
+    public CreditLimit addCreditLimitToCreditApplicationByCreditApplication(CreditApplication creditApplication) {
+        log.info("method is started to use");
+        CreditLimit creditLimit =  new CreditLimit(creditApplication,0);
+        return creditLimitRepository.save(creditLimit);
+
+    }
+
     private Comparator<CreditLimit> getCreditLimitComparator() {
         return (o1, o2) -> {
             if (o1.getId() - o2.getId() < 0)

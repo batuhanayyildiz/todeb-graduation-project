@@ -33,7 +33,7 @@ public class CreditScore {
 
 
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;

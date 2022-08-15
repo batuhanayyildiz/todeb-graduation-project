@@ -213,41 +213,7 @@ class CustomerServiceImplTest {
         Assert.assertEquals(customerExpected.getMonthlyIncome(), actualCustomer.getMonthlyIncome());
         Assert.assertEquals(customerExpected.getPhoneNo(), actualCustomer.getPhoneNo());
     }
-    @Ignore
-    @Test
-    void addCreditScoreToCustomerByIdentityNo() {
-        //init
-        Customer previousCustomer= getSampleTestCustomers().get(0);
-        String identityNo=previousCustomer.getIdentityNo();
 
-        CreditScore expectedCreditScore= new CreditScore(1L,0,previousCustomer);
-        List<CreditScore> creditScores= new ArrayList<>();
-        creditScores.add(expectedCreditScore);
-        //Customer previousCustomer = new Customer(1L,"12345678902","Ali","Genc",5000,
-          //      "05055055050",null,null);
-        //
-        Customer expectedCustomer = getSampleTestCustomers().get(0);
-        expectedCustomer.setCreditScores(creditScores);
-
-
-
-        // stub
-        Mockito.when(customerRepository.findByIdentityNo(Mockito.any())).thenReturn(Optional.of(previousCustomer));
-        Mockito.when(creditScoreService.createCreditScore(Mockito.any())).thenReturn(expectedCreditScore);
-        Mockito.when(customerRepository.save(Mockito.any())).thenReturn(expectedCustomer);
-
-        // then
-
-        Customer actualCustomer = customerService.addCreditScoreToCustomerByIdentityNo(identityNo);
-
-        verify(customerRepository,times(1)).findByIdentityNo(identityNo);
-        verify(creditScoreService,times(1)).createCreditScore(previousCustomer);
-        verify(customerRepository,times(1)).save(expectedCustomer);
-
-        Assert.assertEquals(expectedCustomer.getCreditScores().size(), actualCustomer.getCreditScores().size());
-
-
-    }
     @Ignore
     @Test
     void addCreditApplicationToCustomerByIdentityNo() {

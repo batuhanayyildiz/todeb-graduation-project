@@ -80,21 +80,14 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     }
 
 
-    @Override
-    public CreditApplication createCreditApplication(Customer customer) {
-        log.info("Business logic of createCreditApplication method starts");
-        CreditApplication creditApplication =  new CreditApplication(customer);
-        log.info("Business logic of createCreditApplication method ends");
-        return creditApplicationRepository.save(creditApplication);
 
-    }
     @Override
     public CreditApplication determineLastCreditApplicationStatusByCustomer(Customer customer) {
         log.info("Business logic of determineLastCreditApplicationStatusByCustomer method starts");
         CreditApplication creditApplication = getLastCreditApplicationByCustomer(customer);
         if(ObjectUtils.isEmpty(creditApplication)){
-            log.error("Credit Score is not found");
-            throw new NotFoundException("Credit Score with related customer");
+            log.error("Credit Application is not found");
+            throw new NotFoundException("Credit Application with related customer");
         }
         if( creditApplication.getApplicationStatus()==CreditApplicationStatus.WAITING){
             int customerCreditScore = creditScoreService.getLastCreditScoreByCustomer(customer).getScore();
@@ -115,13 +108,27 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
 
 
     }
-    public CreditApplication addCreditLimitToCreditApplicationByCustomer(Customer customer) {
+    public void addCreditLimitToCreditApplicationByCustomer(Customer customer) {
         log.info("Business logic of addCreditLimitToCreditApplicationByCustomer method starts");
         CreditApplication creditApplication= getLastCreditApplicationByCustomer(customer);
-        CreditLimit creditLimit = creditLimitService.createCreditLimit(creditApplication);
-        creditApplication.getCreditLimits().add(creditLimit);
+        creditLimitService.addCreditLimitToCreditApplicationByCreditApplication(creditApplication);
         log.info("Business logic of addCreditLimitToCreditApplicationByCustomer method ends");
-        return creditApplicationRepository.save(creditApplication);
+
+    }
+
+    @Override
+    public CreditApplication addCreditApplicationToCustomerByCustomer(Customer customer) {
+        log.info("Business logic of addCreditApplicationToCustomerByCustomer starts");
+        if (customerCanApplyForCredit(customer)){
+            CreditApplication creditApplication =  new CreditApplication(customer);
+            log.info("Business logic of createCreditApplication method ends");
+            return creditApplicationRepository.save(creditApplication);
+        }
+        else {
+            log.error("canApplyCondition error");
+            throw new CanApplyConditionException("New application can not be done. " +
+                    "Please wait for the previous application to be finalized ");
+        }
     }
 
     public CreditApplication updateCreditLimitOfCreditApplicationByCustomer(Customer customer) {
@@ -164,6 +171,21 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
             log.info("Business logic of viewCreditApplicationResultByCustomer method ends");
         }
         return result;
+
+    }
+
+    public boolean customerCanApplyForCredit(Customer customer){
+        log.info("Business logic of customerCanApplyForCredit starts");
+        if(customer.getCreditApplications().size()<1){
+            return true;
+        }
+        CreditApplication creditApplication= getLastCreditApplicationByCustomer(customer);
+        if(creditApplication.getApplicationStatus()== CreditApplicationStatus.WAITING){
+            return false;
+        }
+
+        return true;
+
 
     }
 

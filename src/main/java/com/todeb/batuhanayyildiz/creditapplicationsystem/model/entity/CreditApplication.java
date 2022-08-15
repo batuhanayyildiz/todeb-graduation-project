@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,7 +33,7 @@ public class CreditApplication {
     private CreditApplicationStatus applicationStatus;
 
     @OneToMany(mappedBy = "creditApplication",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<CreditLimit> creditLimits;
+    private List<CreditLimit> creditLimits = new ArrayList<CreditLimit>();
 
 
     private int creditMultiplier;

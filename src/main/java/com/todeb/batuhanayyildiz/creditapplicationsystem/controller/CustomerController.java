@@ -4,6 +4,7 @@ import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.CustomerDTO;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CustomerMapper;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CreditApplicationServiceImpl;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CreditScoreServiceImpl;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CustomerServiceImpl;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.SmsServiceImpl;
 import org.mapstruct.factory.Mappers;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 public class CustomerController {
     @Autowired
     private CustomerServiceImpl customerService;
+    @Autowired
+    private CreditScoreServiceImpl creditScoreService;
     @Autowired
     private SmsServiceImpl smsService;
 
@@ -62,11 +65,20 @@ public class CustomerController {
     @PostMapping("/create")
     public ResponseEntity createNewCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         Customer respCustomer = customerService.createCustomer(CUSTOMER_MAPPER.toEntity(customerDTO));
+        creditScoreService.addCreditScoreToCustomerByCustomer(respCustomer);
 
         if (respCustomer == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Customer could not be created successfully");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(customerDTO);
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/add/credit-score/{identityNo}")
+    public ResponseEntity addNewCreditScoreToCustomer(@PathVariable String identityNo) {
+        creditScoreService.addCreditScoreToCustomerByCustomer(customerService.getCustomerByIdentityNo(identityNo));
+        return ResponseEntity.status(HttpStatus.OK).body("Related Credit Score was added to related Customer successfully");
+
+
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -96,13 +108,15 @@ public class CustomerController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/add/credit-score/by-identity-number/{identityNo}")
-    public ResponseEntity addCreditScoreToCustomerByIdentityNo(
-            @PathVariable String identityNo) {
-        customerService.addCreditScoreToCustomerByIdentityNo(identityNo);
-        return ResponseEntity.status(HttpStatus.OK).body("Related Credit Score was added to related Customer successfully");
-    }
+
+
+
+
+
+
+
+
+/*
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
     @PutMapping("/apply/credit-application/by-identity-number/{identityNo}")
@@ -113,6 +127,6 @@ public class CustomerController {
                 body("Related Credit Application was created for related Customer successfully"
                                 +" and "+smsService.sendNotificationByCustomer(customerService.getCustomerByIdentityNo(identityNo)));
     }
-
+*/
 
 }

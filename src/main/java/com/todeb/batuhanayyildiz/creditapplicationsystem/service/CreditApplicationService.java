@@ -13,9 +13,10 @@ public interface CreditApplicationService {
     CreditApplication getCreditApplicationById(Long id);
     CreditApplication getLastCreditApplicationByCustomer(Customer customer);
 
-    CreditApplication createCreditApplication(Customer customer);
-
     CreditApplication determineLastCreditApplicationStatusByCustomer(Customer customer);
-    CreditApplication addCreditLimitToCreditApplicationByCustomer(Customer customer);
+    void addCreditLimitToCreditApplicationByCustomer(Customer customer);
+    boolean customerCanApplyForCredit(Customer customer);
+
+    CreditApplication addCreditApplicationToCustomerByCustomer(Customer customer);
     String viewCreditApplicationResultByCustomer( Customer customer);
     }

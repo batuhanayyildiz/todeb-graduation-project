@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -46,13 +47,13 @@ public class Customer {
     @Column(name="phone_number")
     private String phoneNo;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
-    private List<CreditScore> creditScores;
+    private List<CreditScore> creditScores=new ArrayList<CreditScore>();
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
-    private List<CreditApplication> creditApplications;
+    private List<CreditApplication> creditApplications=new ArrayList<CreditApplication>();;
 
 
 }

@@ -25,7 +25,7 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final CreditScoreServiceImpl creditScoreService;
+
     private final CreditApplicationServiceImpl creditApplicationService;
 
 
@@ -111,54 +111,10 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("Business logic of updateCustomerByIdentityNo ends");
         return customerRepository.save(updatedCustomer);
     }
-    @Override
-    public Customer addCreditScoreToCustomerByIdentityNo(String identityNo){
-        log.info("Business logic of addCreditScoreToCustomerByIdentityNo starts");
-        Customer customer= getCustomerByIdentityNo(identityNo);
-        if(!ObjectUtils.isEmpty(customer)){
-            CreditScore creditScore = creditScoreService.createCreditScore(customer);
-            customer.getCreditScores().add(creditScore);
-            log.info("Business logic is completed");
-            return customerRepository.save(customer);
-        }
-        else throw new NotFoundException("Customer");
 
 
-    }
-
-    @Override
-    public Customer addCreditApplicationToCustomerByIdentityNo(String identityNo) {
-        log.info("Business logic of addCreditApplicationToCustomerByIdentityNo starts");
-        Customer customer= getCustomerByIdentityNo(identityNo);
-        if (customerCanApplyForCredit(customer)){
-            log.info("canApply is true");
-            CreditApplication creditApplication = creditApplicationService.createCreditApplication(customer);
-            customer.getCreditApplications().add(creditApplication);
-            return customerRepository.save(customer);
-
-        }
-        else {
-            log.error("canApplyCondition error");
-            throw new CanApplyConditionException("New application can not be done. " +
-                    "Please wait for the previous application to be finalized ");
-        }
-
-    }
-    @Override
-    public boolean customerCanApplyForCredit(Customer customer){
-        log.info("Business logic of customerCanApplyForCredit starts");
-        if(customer.getCreditApplications().size()<1){
-            return true;
-        }
-        CreditApplication creditApplication= creditApplicationService.getLastCreditApplicationByCustomer(customer);
-        if(creditApplication.getApplicationStatus()== CreditApplicationStatus.WAITING){
-            return false;
-        }
-
-        return true;
 
 
-    }
 
 
 }

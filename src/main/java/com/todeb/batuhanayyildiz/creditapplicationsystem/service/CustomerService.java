@@ -15,10 +15,6 @@ public interface CustomerService {
 
     Customer updateCustomerByIdentityNo(String identityNo,Customer customer);
 
-    Customer addCreditScoreToCustomerByIdentityNo(String identityNo);
-    Customer addCreditApplicationToCustomerByIdentityNo(String identityNo);
-
-    boolean customerCanApplyForCredit(Customer customer);
 
 
 

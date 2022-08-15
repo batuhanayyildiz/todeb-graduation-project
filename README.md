@@ -13,8 +13,8 @@
 - Mapstruct V1.5.2 Final
 
 ## Expected Running Procedure
-
-  There are three possible type of runnig procedure of application. First type is thought as customer applies credit from online and everything goes well for customer. However, when there is an obligation for credit application result, customer goes to bank and type 2 and 3 gets involved. According discontent of Customer, credit limit can be updated.Also, bank can add new credit score seperately to customer and can determine the credit result. Due to importance of data, all previous credit scores, applications,limits are kept in database. For all types, Bank = Admin
+For all types, Bank = Admin<br /><br />
+  There are two possible types of runnig procedure of application. First type is thought as customer applies credit from online and everything goes well for customer. However, when there is an obligation for credit application result, customer goes to bank and type 2 and 3 gets involved. According discontent of Customer, credit limit can be updated.Also, bank can add new credit score seperately to customer and can determine the credit result. Due to importance of data, all previous credit scores, applications,limits are kept in database. Moreover, for all types, if customer wants update his/her information, there is a necessity for going bank and perform desired process with accompaniation of bank.
 ### First Type
 1. Customer or Admin enters informations of customer and credit score is added automatically.<br /><br />
  ---> by following this URI --> "/api/customer/create"<br /><br />

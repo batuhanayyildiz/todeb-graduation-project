@@ -91,16 +91,7 @@ public class CreditApplicationController {
                 .viewCreditApplicationResultByCustomer(customerService.getCustomerByIdentityNo(identityNo)));
     }
 
-
-
-    // For testing corresponding service methods with controller
-    @PutMapping("/determine/last-application-status/by-identity-number/{identityNo}")
-    public ResponseEntity determineLastCreditApplicationStatusByCustomerIdentityNo(
-            @PathVariable String identityNo) {
-        Customer customer = customerService.getCustomerByIdentityNo(identityNo);
-        creditApplicationService.determineLastCreditApplicationStatusByCustomer(customer);
-        return ResponseEntity.status(HttpStatus.OK).body("Related Application Status was determined successfully");
-    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update/credit-limit/by-identity-number/{identityNo}")
     public ResponseEntity updateCreditLimitOfCreditApplicationByCustomer(
             @PathVariable String identityNo) {
@@ -108,7 +99,7 @@ public class CreditApplicationController {
         creditApplicationService.updateCreditLimitOfCreditApplicationByCustomer(customer);
         return ResponseEntity.status(HttpStatus.OK).body("Related Credit Limit was updated for related Customer successfully");
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/add/credit-application/by-identity-number/{identityNo}")
     public ResponseEntity addCreditApplicationToCustomerByIdentityNo(
             @PathVariable String identityNo) {
@@ -117,6 +108,18 @@ public class CreditApplicationController {
         return ResponseEntity.status(HttpStatus.OK).body("Related Credit Limit was added to related Customer successfully");
     }
 
+
+
+    // For testing corresponding service methods with controller.
+
+    /*
+    @PutMapping("/determine/last-application-status/by-identity-number/{identityNo}")
+    public ResponseEntity determineLastCreditApplicationStatusByCustomerIdentityNo(
+            @PathVariable String identityNo) {
+        Customer customer = customerService.getCustomerByIdentityNo(identityNo);
+        creditApplicationService.determineLastCreditApplicationStatusByCustomer(customer);
+        return ResponseEntity.status(HttpStatus.OK).body("Related Application Status was determined successfully");
+    }
     @PostMapping("/add/credit-limit/by-identity-number/{identityNo}")
     public ResponseEntity addCreditLimitToCustomerByIdentityNo(
             @PathVariable String identityNo) {
@@ -124,6 +127,8 @@ public class CreditApplicationController {
         creditApplicationService.addCreditLimitToCreditApplicationByCustomer(customer);
         return ResponseEntity.status(HttpStatus.OK).body("Related Credit Limit was added to related Customer successfully");
     }
+    */
+
 }
 
 

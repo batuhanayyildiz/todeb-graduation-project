@@ -73,7 +73,7 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerDTO);
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/add/credit-score/{identityNo}")
+    @PostMapping("/add/credit-score/by-identity-number/{identityNo}")
     public ResponseEntity addNewCreditScoreToCustomer(@PathVariable String identityNo) {
         creditScoreService.addCreditScoreToCustomerByCustomer(customerService.getCustomerByIdentityNo(identityNo));
         return ResponseEntity.status(HttpStatus.OK).body("Related Credit Score was added to related Customer successfully");

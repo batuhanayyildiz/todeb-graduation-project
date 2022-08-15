@@ -13,22 +13,27 @@
 - Mapstruct V1.5.2 Final
 
 ## Expected Running Procedure
-Admin= Bank
-  There are two possible type of runnig procedure of application. First type is thought as customer applies credit from online and everything goes well for customer. However, when there is an obligation for credit application result, customer goes to bank and type 2 gets involved. According discontent of Customer, credit limit can be updated.Also, bank can add new credit score seperately to customer and can determine the credit result. Due to importance of data, all previous credit scores, applications,limits are kept in database.
+
+  There are three possible type of runnig procedure of application. First type is thought as customer applies credit from online and everything goes well for customer. However, when there is an obligation for credit application result, customer goes to bank and type 2 and 3 gets involved. According discontent of Customer, credit limit can be updated.Also, bank can add new credit score seperately to customer and can determine the credit result. Due to importance of data, all previous credit scores, applications,limits are kept in database. For all types, Bank = Admin
 ### First Type
-1. Customer or Admin enters informations of customer and credit score is added automatically.
- ---> by following this URI --> "/api/customer/create"
-2. Customer applies for credit application and result is decided automatically.
----> by following this URI --> "/api/application/apply/credit-application/by-identity-number/{identityNo}"
-3. Customer can view result with identity number.
+1. Customer or Admin enters informations of customer and credit score is added automatically.<br /><br />
+ ---> by following this URI --> "/api/customer/create"<br /><br />
+2. Customer applies for credit application and result is decided automatically.<br /><br />
+---> by following this URI --> "/api/application/apply/credit-application/by-identity-number/{identityNo}"<br /><br />
+3. Customer can view result with identity number.<br /><br />
 ---> by following this URI --> "/api/application/view/application-result/{identityNo}"
 
 ### Second Type
-1. Customer or Admin enters informations of customer and credit score is added automatically.
-2. Bank can add new credit score.
-3. Bank can add new credit application.
-4. Bank determines the result of application.
-5. Customer can view result with identity number after credit application is created.
+1. Customer or Admin enters informations of customer and credit score is added automatically.<br />
+---> by following this URI --> "/api/customer/create"<br /><br />
+2. Bank can add new credit score.<br />
+---> by following this URI --> "/api/customer/add/credit-score/{identityNo}"<br /><br />
+3. Bank can add new credit application.<br />
+---> by following this URI --> "/api/application/add/credit-application/by-identity-number/{identityNo}"<br /><br />
+4. Bank determines the result of application.<br />
+---> by following this URI --> "/api/application/determine/result/by-identity-number/{identityNo}"<br /><br />
+5. Customer can view result with identity number after credit application is created.<br /><br />
+---> by following this URI --> "/api/application/view/application-result/{identityNo}"
 
 
 ## Requirements

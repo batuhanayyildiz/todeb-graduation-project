@@ -13,8 +13,8 @@
 - Mapstruct V1.5.2 Final
 
 ### Expected Running Procedure
-
-Admin = Bank
+There are two possible type of runnig procedure of application
+#First Type
 1. Customer or Admin enters informations of customer and Customer is created.
 2. Customer applies for credit application.
 3. Customer can view result after credit application is created

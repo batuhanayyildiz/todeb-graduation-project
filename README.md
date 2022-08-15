@@ -14,7 +14,7 @@
 
 ### Expected Running Procedure
 There are two possible type of runnig procedure of application
-#First Type
+##First Type
 1. Customer or Admin enters informations of customer and Customer is created.
 2. Customer applies for credit application.
 3. Customer can view result after credit application is created

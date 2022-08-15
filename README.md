@@ -27,7 +27,7 @@ For all types, Bank = Admin<br /><br />
 1. Customer or Admin enters informations of customer and credit score is added automatically.<br /><br />
 ---> by following this URI --> "/api/customer/create"<br /><br />
 2. Bank can add new credit score.<br /><br />
----> by following this URI --> "/api/customer/add/credit-score/{identityNo}"<br /><br />
+---> by following this URI --> "/api/customer/add/credit-score/by-identity-number/{identityNo}"<br /><br />
 3. Bank can add new credit application.<br /><br />
 ---> by following this URI --> "/api/application/add/credit-application/by-identity-number/{identityNo}"<br /><br />
 4. Bank determines the result of application.<br /><br />

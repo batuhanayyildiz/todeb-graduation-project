@@ -5,7 +5,7 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.controller;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.UserDataDTO;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.UserLoginDTO;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.User;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.UserService;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;

@@ -1,12 +1,12 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplication;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CustomerRepository;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditApplicationService;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditScoreService;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CustomerService;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,16 +25,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CustomerServiceImplTest {
+class CustomerServiceTest {
     @Mock
     private  CustomerRepository customerRepository;
     @Mock
-    private  CreditScoreServiceImpl creditScoreService;
+    private CreditScoreService creditScoreService;
     @Mock
-    private  CreditApplicationServiceImpl creditApplicationService;
+    private CreditApplicationService creditApplicationService;
 
     @InjectMocks
-    private CustomerServiceImpl customerService;
+    private CustomerService customerService;
 
     @Test
     void getCustomerById_successful() {

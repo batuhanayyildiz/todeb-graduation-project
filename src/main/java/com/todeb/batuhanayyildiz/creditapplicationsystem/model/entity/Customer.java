@@ -48,11 +48,12 @@ public class Customer {
     private String phoneNo;
 
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "credit_score_id",referencedColumnName = "id")
     private List<CreditScore> creditScores=new ArrayList<CreditScore>();
 
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+//
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<CreditApplication> creditApplications=new ArrayList<CreditApplication>();;
 
 

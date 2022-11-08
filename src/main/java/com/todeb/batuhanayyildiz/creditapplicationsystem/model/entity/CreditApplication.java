@@ -6,18 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-
+@Entity
 public class CreditApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,25 +23,37 @@ public class CreditApplication {
     @Column(name="application_date", updatable = false, nullable = false)
     private LocalDate creditApplicationDate;
 
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "application_result")
+    private CreditApplicationResult applicationResult;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "application_status")
     private CreditApplicationStatus applicationStatus;
 
-    @OneToMany(mappedBy = "creditApplication",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<CreditLimit> creditLimits = new ArrayList<CreditLimit>();
+
+
+
+
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "credit_limit_id", referencedColumnName = "id")
+    private CreditLimit creditLimit;
 
 
     private int creditMultiplier;
 
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
     public CreditApplication(Customer customer){
         this.customer=customer;
-        this.applicationStatus=CreditApplicationStatus.WAITING;
+        this.applicationResult=CreditApplicationResult.WAITING;
+        this.applicationStatus=CreditApplicationStatus.ACTIVE;
         this.creditMultiplier=4;
     }
 

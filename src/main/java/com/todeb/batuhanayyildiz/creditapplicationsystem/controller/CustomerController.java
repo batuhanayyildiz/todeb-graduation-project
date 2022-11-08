@@ -3,12 +3,9 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.controller;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.CustomerDTO;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CustomerMapper;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CreditApplicationServiceImpl;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CreditScoreServiceImpl;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CustomerServiceImpl;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.SmsServiceImpl;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditScoreService;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CustomerService;
 import org.mapstruct.factory.Mappers;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +22,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/customer")
 public class CustomerController {
     @Autowired
-    private CustomerServiceImpl customerService;
+    private CustomerService customerService;
     @Autowired
-    private CreditScoreServiceImpl creditScoreService;
+    private CreditScoreService creditScoreService;
 
 
     private static final CustomerMapper CUSTOMER_MAPPER = Mappers.getMapper(CustomerMapper.class);

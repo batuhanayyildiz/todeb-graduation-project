@@ -2,7 +2,7 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.User;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.UserRepository;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.UserService;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

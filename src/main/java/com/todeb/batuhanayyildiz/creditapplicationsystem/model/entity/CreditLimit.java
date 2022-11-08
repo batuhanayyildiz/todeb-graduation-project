@@ -1,21 +1,16 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 public class CreditLimit {
-
-    // an application ,which is more suitable for expansion, is aimed.
-    // It is created as seperated entity because if application expands, there is possibility for being more complex for Credit Limit.
 
 
     @Id
@@ -23,9 +18,7 @@ public class CreditLimit {
     private Long id;
 
     private double creditLimit;
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "credit_application_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "creditLimit")
     private  CreditApplication creditApplication;
 
     public CreditLimit(CreditApplication creditApplication, double creditLimit) {

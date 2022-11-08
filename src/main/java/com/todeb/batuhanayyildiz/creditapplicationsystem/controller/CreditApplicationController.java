@@ -3,12 +3,10 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.controller;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplication;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CreditApplicationMapper;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CustomerMapper;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CreditApplicationServiceImpl;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CustomerServiceImpl;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.SmsServiceImpl;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditApplicationService;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CustomerService;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.SmsService;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,15 +17,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/application")
 public class CreditApplicationController {
 
-    @Autowired
-    private CreditApplicationServiceImpl creditApplicationService;
 
-    @Autowired
-    private CustomerServiceImpl customerService;
-    @Autowired
-    private SmsServiceImpl smsService;
+    private final CreditApplicationService creditApplicationService;
+
+
+    private final CustomerService customerService;
+
+    private final SmsService smsService;
 
     private static final CreditApplicationMapper CREDIT_APPLICATION_MAPPER = Mappers.getMapper(CreditApplicationMapper.class);
+
+    public CreditApplicationController(CreditApplicationService creditApplicationService, CustomerService customerService, SmsService smsService) {
+        this.creditApplicationService = creditApplicationService;
+        this.customerService = customerService;
+        this.smsService = smsService;
+    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CUSTOMER')")
     @GetMapping

@@ -1,4 +1,4 @@
-package com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl;
+package com.todeb.batuhanayyildiz.creditapplicationsystem.service;
 
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CustomJwtException;

@@ -6,9 +6,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.handler.GenericExceptionHandler;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CreditScoreServiceImpl;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.service.impl.CustomerServiceImpl;
-import org.checkerframework.framework.qual.IgnoreInWholeProgramInference;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CreditScoreService;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.service.CustomerService;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +26,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,10 +41,10 @@ class CustomerControllerTest {
     private MockMvc mvc;
 
     @Mock
-    private CustomerServiceImpl customerService;
+    private CustomerService customerService;
 
     @Mock
-    private CreditScoreServiceImpl creditScoreService;
+    private CreditScoreService creditScoreService;
 
     @InjectMocks
     private CustomerController customerController;

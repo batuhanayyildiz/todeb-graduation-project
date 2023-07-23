@@ -3,7 +3,7 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.service;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CanApplyConditionException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.*;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationStatus;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -89,13 +89,13 @@ public class CreditApplicationService {
             log.error("Credit Application is not found");
             throw new NotFoundException("Credit Application with related customer");
         }
-        if( creditApplication.getApplicationStatus()== CreditApplicationResult.WAITING){
+        if( creditApplication.getApplicationStatus()== CreditApplicationStatus.WAITING){
             int customerCreditScore = creditScoreService.getLastCreditScoreByCustomer(customer).getScore();
             if (customerCreditScore<500){
-                creditApplication.setApplicationStatus(CreditApplicationResult.DENIED);
+                creditApplication.setApplicationStatus(CreditApplicationStatus.DENIED);
             }
             else{
-                creditApplication.setApplicationStatus(CreditApplicationResult.ACCEPTED);
+                creditApplication.setApplicationStatus(CreditApplicationStatus.ACCEPTED);
             }
             log.info("Business logic of determineLastCreditApplicationStatusByCustomer method ends");
             return creditApplicationRepository.save(creditApplication);
@@ -162,7 +162,7 @@ public class CreditApplicationService {
             log.error("Credit Limit is not found. ");
         }
         else {
-            CreditLimit creditLimit= creditLimitService.getLastCreditLimitByCreditApplication(creditApplication);
+            CreditLimit creditLimit= creditLimitService.getCreditLimitByCreditApplication(creditApplication);
             result = "Identity number: " + customer.getIdentityNo() + " --- "
                     + "Name: " + customer.getName() + " --- "
                     + "Surname: " + customer.getSurname() + " --- "
@@ -180,7 +180,7 @@ public class CreditApplicationService {
             return true;
         }
         CreditApplication creditApplication= getLastCreditApplicationByCustomer(customer);
-        if(creditApplication.getApplicationStatus()== CreditApplicationResult.WAITING){
+        if(creditApplication.getApplicationStatus()== CreditApplicationStatus.WAITING){
             return false;
         }
 
@@ -189,8 +189,18 @@ public class CreditApplicationService {
 
     }
 
+    private Comparator<CreditApplication> getCreditApplicationComparator() {
+        return (o1, o2) -> {
+            if (o1.getCreditApplicationDate().isBefore(o2.getCreditApplicationDate()))
+                return -1;
+            if (o1.getCreditApplicationDate().isAfter(o2.getCreditApplicationDate()))
+                return 1;
+            return 0;
+        };
+    }
 
-
+}
+/*
     private Comparator<CreditApplication> getCreditApplicationComparator() {
         return (o1, o2) -> {
             if (o1.getId() - o2.getId() < 0)
@@ -200,4 +210,5 @@ public class CreditApplicationService {
             return 1;
         };
     }
-}
+
+ */

@@ -76,13 +76,13 @@ public class CreditScoreService {
     public boolean deleteCreditScoreByCustomerIdentityNo(String identityNo){
         Optional<CreditScore> creditScoreByCustomerIdentityNo = creditScoreRepository.findByCustomer_IdentityNo(identityNo);
         CreditScore creditScore=creditScoreByCustomerIdentityNo.get();
-        Long id=creditScore.getId();
+        String id=creditScore.getId();
         if(!ObjectUtils.isEmpty(creditScoreByCustomerIdentityNo)){
             log.info("in if condition");
             creditScoreRepository.delete(getCreditScoreById(id));
             return true;
         }
-        else throw new NotFoundException("id"+""+id.toString());
+        else throw new NotFoundException("id"+id);
 
     }
 

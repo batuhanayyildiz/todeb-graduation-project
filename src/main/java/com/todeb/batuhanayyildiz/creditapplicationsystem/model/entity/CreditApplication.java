@@ -2,7 +2,6 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,10 +28,6 @@ public class CreditApplication {
 
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "application_result")
-    private CreditApplicationResult applicationResult;
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "application_status")
     private CreditApplicationStatus applicationStatus;
 
@@ -52,8 +47,7 @@ public class CreditApplication {
 
     public CreditApplication(Customer customer){
         this.customer=customer;
-        this.applicationResult=CreditApplicationResult.WAITING;
-        this.applicationStatus=CreditApplicationStatus.ACTIVE;
+        this.applicationStatus= CreditApplicationStatus.WAITING;
         this.creditMultiplier=4;
     }
 

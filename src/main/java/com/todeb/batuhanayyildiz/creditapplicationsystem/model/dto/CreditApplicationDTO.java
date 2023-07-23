@@ -1,7 +1,6 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationStatus;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditLimit;
 import lombok.Data;
@@ -16,7 +15,7 @@ public class CreditApplicationDTO {
     private LocalDate creditApplicationDate;
 
     @Enumerated(EnumType.STRING)
-    private CreditApplicationResult applicationResult;
+    private CreditApplicationStatus applicationResult;
 
     @Enumerated(EnumType.STRING)
     private CreditApplicationStatus applicationStatus;

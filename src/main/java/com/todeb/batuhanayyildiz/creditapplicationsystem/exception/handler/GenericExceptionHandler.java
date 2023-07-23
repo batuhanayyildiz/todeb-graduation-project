@@ -2,6 +2,7 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.exception.handler;
 
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CanApplyConditionException;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CreditLimitCalculatedException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CustomJwtException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +39,12 @@ public class GenericExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    @ExceptionHandler(CreditLimitCalculatedException.class)
+    public ResponseEntity<Map> handleCreditLimitException(CreditLimitCalculatedException exception){
+        Map<String,String> response =new HashMap<>();
+        response.put("error_message", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 
 
     @ExceptionHandler(Exception.class)

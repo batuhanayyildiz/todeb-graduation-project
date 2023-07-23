@@ -1,4 +1,4 @@
-package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
+package com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums;
 
 public enum CreditApplicationResult {
     WAITING,

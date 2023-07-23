@@ -2,10 +2,13 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,8 +18,9 @@ import java.time.LocalDate;
 @Entity
 public class CreditApplication {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator="UUID")
+    @GenericGenerator(name="UUID",strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
 
     @CreationTimestamp
     @JsonFormat( pattern = "dd-MM-yyyy" )
@@ -31,10 +35,6 @@ public class CreditApplication {
     @Enumerated(EnumType.STRING)
     @Column(name = "application_status")
     private CreditApplicationStatus applicationStatus;
-
-
-
-
 
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)

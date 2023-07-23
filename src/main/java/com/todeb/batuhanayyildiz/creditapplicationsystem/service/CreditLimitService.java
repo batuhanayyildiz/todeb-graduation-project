@@ -2,6 +2,7 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.service;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.*;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditLimitRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,17 +22,7 @@ public class CreditLimitService {
     private final CreditLimitRepository creditLimitRepository;
 
 
-
-
-    public CreditLimit getCreditLimitById(Long id) {
-        return null;
-    }
-
-
-    public CreditLimit getCreditLimitByApplicationId(Long id) {
-        return null;
-    }
-
+/*
     public CreditLimit getLastCreditLimitByCreditApplication(CreditApplication creditApplication) {
         log.info("Business logic of getLastCreditLimitByCreditApplication starts");
         List<CreditLimit> creditLimitByCreditApplication = creditLimitRepository.findAll().stream()
@@ -49,7 +40,24 @@ public class CreditLimitService {
 
 
     }
+*/
+public CreditLimit getCreditLimitByCreditApplication(CreditApplication creditApplication) {
+    log.info("Business logic of getLastCreditLimitByCreditApplication starts");
+    List<CreditLimit> creditLimitByCreditApplication = creditLimitRepository.findAll().stream()
+            .filter(creditLimit-> creditLimit.getCreditApplication()==creditApplication)
+            .sorted(getCreditLimitComparator()).collect(Collectors.toList());
+    if (creditLimitByCreditApplication.size()<1){
+        log.error("Credit Limit is not found by customer");
+        throw new NotFoundException("Credit Limit");
+    }
+    Optional<CreditLimit> creditLimit= Optional.of(creditLimitByCreditApplication.get(creditLimitByCreditApplication.size()-1));
 
+    return creditLimit.orElseThrow(()->{
+        log.error("Credit Limit is not found by customer");
+        return new NotFoundException("Credit Limit");});
+
+
+}
 
 
     public double creditLimitCalculation(Customer customer, CreditApplication creditApplication, CreditScore creditScore) {

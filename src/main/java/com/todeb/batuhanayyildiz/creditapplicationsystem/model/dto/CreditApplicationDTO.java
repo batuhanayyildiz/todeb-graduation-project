@@ -1,8 +1,8 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplicationResult;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplicationStatus;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationStatus;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditLimit;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;

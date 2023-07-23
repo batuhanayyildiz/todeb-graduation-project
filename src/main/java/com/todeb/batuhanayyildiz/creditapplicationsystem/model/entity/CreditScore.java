@@ -3,9 +3,9 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 @Data
@@ -16,8 +16,9 @@ import javax.persistence.*;
 public class CreditScore {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator="UUID")
+    @GenericGenerator(name="UUID",strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
 
 
     @Column(name="score")

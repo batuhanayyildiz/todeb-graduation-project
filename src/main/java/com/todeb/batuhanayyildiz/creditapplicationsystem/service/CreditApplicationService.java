@@ -3,6 +3,7 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.service;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CanApplyConditionException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.*;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

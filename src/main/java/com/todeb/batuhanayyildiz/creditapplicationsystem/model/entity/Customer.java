@@ -11,11 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Data
@@ -39,6 +35,7 @@ public class Customer {
     @NotBlank(message = "name cannot be empty")
     @Column(name="name")
     private String name;
+
     @NotBlank(message = "surname cannot be empty")
     @Column(name="surname")
     private String surname;
@@ -47,19 +44,28 @@ public class Customer {
     @Column(name="monthly_income")
     private int monthlyIncome;
 
-
     @NotBlank(message = "phone number cannot be empty")
     @Column(name="phone_number")
     private String phoneNo;
-
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "credit_score_id",referencedColumnName = "id")
     private Set<CreditScore> creditScores=new HashSet<CreditScore>();
 
-//
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<CreditApplication> creditApplications=new HashSet<CreditApplication>();;
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id.equals(customer.id) && identityNo.equals(customer.identityNo) && name.equals(customer.name) && surname.equals(customer.surname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, identityNo, name, surname);
+    }
 }

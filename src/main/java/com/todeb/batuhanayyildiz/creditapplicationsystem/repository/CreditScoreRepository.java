@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CreditScoreRepository extends JpaRepository<CreditScore, Long> {
+public interface CreditScoreRepository extends JpaRepository<CreditScore, String> {
     Optional<CreditScore> findByCustomer_IdentityNo(String identityNo);
 }

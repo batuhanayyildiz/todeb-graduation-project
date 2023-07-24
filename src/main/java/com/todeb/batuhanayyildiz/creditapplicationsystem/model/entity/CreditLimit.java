@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,10 +26,26 @@ public class CreditLimit {
     @JoinColumn(name = "credit_application_id", referencedColumnName = "id")
     private  CreditApplication creditApplication;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CreditLimit that = (CreditLimit) o;
+        return Double.compare(that.creditLimit, creditLimit) == 0 && id.equals(that.id) && creditApplication.equals(that.creditApplication);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, creditLimit, creditApplication);
+    }
+
+/*
     public CreditLimit(CreditApplication creditApplication, double creditLimit) {
         this.creditApplication=creditApplication;
         this.creditLimit=creditLimit;
 
 
     }
+    */
+
 }

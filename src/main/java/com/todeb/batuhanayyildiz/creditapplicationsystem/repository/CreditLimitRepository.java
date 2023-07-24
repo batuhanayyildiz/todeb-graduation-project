@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CreditLimitRepository extends JpaRepository<CreditLimit, Long> {
+public interface CreditLimitRepository extends JpaRepository<CreditLimit, String> {
     Optional<CreditLimit> findByCreditApplication_Customer_IdentityNo(String identityNo);
     Optional<CreditLimit> findByCreditApplication_Id(String id);
 

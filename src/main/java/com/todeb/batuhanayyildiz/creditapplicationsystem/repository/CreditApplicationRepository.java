@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CreditApplicationRepository extends JpaRepository<CreditApplication,Long> {
+public interface CreditApplicationRepository extends JpaRepository<CreditApplication,String> {
     Optional<CreditApplication> findByCustomer_IdentityNo(String identityNo);
 
 }

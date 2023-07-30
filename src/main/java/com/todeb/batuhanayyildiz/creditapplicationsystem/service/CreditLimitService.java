@@ -3,23 +3,19 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.service;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CreditLimitCalculatedException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.*;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationStatus;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditLimitRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class CreditLimitService {
-
-
     private final CreditLimitRepository creditLimitRepository;
-
 
 
 public CreditLimit getCreditLimitByCreditApplication(CreditApplication creditApplication) {
@@ -34,27 +30,22 @@ public CreditLimit getCreditLimitByCreditApplication(CreditApplication creditApp
 }
 
 
-public double creditLimitCalculation(Customer customer, CreditApplication creditApplication, CreditScore creditScore) {
-    int monthlyIncome= customer.getMonthlyIncome();
-    int score=creditScore.getScore();
-    if (creditApplication.getApplicationStatus() != CreditApplicationStatus.WAITING){
+protected double creditLimitCalculationByCreditApplicationID(CreditApplication creditApplication,int monthlyIncome,int creditScore) {
+    if (creditApplication.getApplicationResult() != CreditApplicationResult.WAITING){
         log.error("Limit is already calculated");
         throw new CreditLimitCalculatedException(creditApplication.getId());}
-        if (score<1000 && monthlyIncome<5000){
-            return 10000;
+
+
+    if (creditScore<1000 && monthlyIncome<5000){
+        return 10000;
         }
-        else if (score<1000 && monthlyIncome>=5000){
+    else if (creditScore<1000 && monthlyIncome>=5000){
             return 20000;
         }
-        else{
+
+    else{
             return monthlyIncome*creditApplication.getCreditMultiplier();
         }
-    }
-    public CreditLimit addCreditLimitToCreditApplicationByCreditApplication(CreditApplication creditApplication) {
-        log.info("method is started to use");
-        CreditLimit creditLimit =  new CreditLimit(creditApplication,0);
-        return creditLimitRepository.save(creditLimit);
-
     }
 
 }

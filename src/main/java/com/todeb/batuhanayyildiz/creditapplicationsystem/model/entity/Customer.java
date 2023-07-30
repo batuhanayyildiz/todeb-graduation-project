@@ -24,7 +24,7 @@ public class Customer {
     @Id
     @GeneratedValue(generator="UUID")
     @GenericGenerator(name="UUID",strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    private String id ="";
 
     @Pattern(regexp="^[1-9]{1}[0-9]{9}[02468]{1}$",
             message="Format error. Example Format :00100100101")
@@ -50,10 +50,10 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "credit_score_id",referencedColumnName = "id")
-    private Set<CreditScore> creditScores=new HashSet<CreditScore>();
+    private Set<CreditScore> creditScore=new HashSet<CreditScore>();
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<CreditApplication> creditApplications=new HashSet<CreditApplication>();;
+    private Set<CreditApplication> creditApplication=new HashSet<CreditApplication>();;
 
 
     @Override

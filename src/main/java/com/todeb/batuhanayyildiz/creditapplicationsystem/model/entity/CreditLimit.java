@@ -1,12 +1,15 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Data
@@ -19,10 +22,11 @@ public class CreditLimit {
     @Id
     @GeneratedValue(generator="UUID")
     @GenericGenerator(name="UUID",strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    private String id="";
 
     private double creditLimit;
-    @OneToOne(mappedBy = "creditLimit",fetch = FetchType.LAZY)
+
+    @OneToOne(mappedBy = "creditLimit",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "credit_application_id", referencedColumnName = "id")
     private  CreditApplication creditApplication;
 

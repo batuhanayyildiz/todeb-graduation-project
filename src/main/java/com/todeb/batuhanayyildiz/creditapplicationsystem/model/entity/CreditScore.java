@@ -2,7 +2,6 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Data
@@ -23,20 +22,24 @@ public class CreditScore {
     @Id
     @GeneratedValue(generator="UUID")
     @GenericGenerator(name="UUID",strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
-
-    @Column(name="score")
-    private int score;
+    private String id="";
 
     @CreationTimestamp
     @JsonFormat( pattern = "dd-MM-yyyy" )
-    @Column(name="application_date", updatable = false, nullable = false)
-    private LocalDate creditScoreCalculationDate;
+    @Column(name="credit_score_calculation_date", updatable = false, nullable = false)
+    private LocalDateTime creditScoreCalculationDate;
+    @Column(name="score")
+    private int score;
 
-    @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
+
+
+    public CreditScore(LocalDateTime creditScoreCalculationDate,int score){
+        this.creditScoreCalculationDate=creditScoreCalculationDate;
+        this.score=score;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -59,4 +62,4 @@ public class CreditScore {
     }
     */
 
-}
+

@@ -1,9 +1,8 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.service;
 
-import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CreditLimitCalculatedException;
+
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.*;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditLimitRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,23 +17,10 @@ public class CreditLimitService {
     private final CreditLimitRepository creditLimitRepository;
 
 
-public CreditLimit getCreditLimitByCreditApplication(CreditApplication creditApplication) {
-    log.info("Business logic of getLastCreditLimitByCreditApplication starts");
-    Optional<CreditLimit> creditLimitByCreditApplication = creditLimitRepository.findByCreditApplication_Id(creditApplication.getId());
-
-    return creditLimitByCreditApplication.orElseThrow(()->{
-        log.error("Credit Limit is not found from credit application");
-        return new NotFoundException("Credit Limit");});
 
 
-}
 
-
-protected double creditLimitCalculationByCreditApplicationID(CreditApplication creditApplication,int monthlyIncome,int creditScore) {
-    if (creditApplication.getApplicationResult() != CreditApplicationResult.WAITING){
-        log.error("Limit is already calculated");
-        throw new CreditLimitCalculatedException(creditApplication.getId());}
-
+protected double creditLimitCalculation(int creditMultiplier,int monthlyIncome,int creditScore) {
 
     if (creditScore<1000 && monthlyIncome<5000){
         return 10000;
@@ -44,7 +30,7 @@ protected double creditLimitCalculationByCreditApplicationID(CreditApplication c
         }
 
     else{
-            return monthlyIncome*creditApplication.getCreditMultiplier();
+            return monthlyIncome*creditMultiplier;
         }
     }
 
@@ -68,4 +54,15 @@ protected double creditLimitCalculationByCreditApplicationID(CreditApplication c
 
 
     }
+
+    public CreditLimit getCreditLimitByCreditApplication(CreditApplication creditApplication) {
+    log.info("Business logic of getLastCreditLimitByCreditApplication starts");
+    Optional<CreditLimit> creditLimitByCreditApplication = creditLimitRepository.findByCreditApplication_Id(creditApplication.getId());
+
+    return creditLimitByCreditApplication.orElseThrow(()->{
+        log.error("Credit Limit is not found from credit application");
+        return new NotFoundException("Credit Limit");});
+
+
+}
 */

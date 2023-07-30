@@ -35,13 +35,6 @@ public class CustomerService {
         customer.getCreditScore().add(creditScore);
         return CUSTOMER_MAPPER.toDto(customerRepository.save(customer));
     }
-    /*
-    protected CustomerDTO addCreditApplicationToCustomerByIdentityNo(String identityNo,CreditApplication creditApplication){
-        Customer customer= findCustomerByIdentityNo(identityNo);
-        customer.getCreditApplication().add(creditApplication);
-        return CUSTOMER_MAPPER.toDto(customerRepository.save(customer));
-    }
-*/
     protected Customer findCustomerById(String id) {
         log.info("Business logic of getCustomerById starts");
         Optional<Customer> byId = customerRepository.findById(id);
@@ -60,12 +53,11 @@ public class CustomerService {
             log.error("Customer is not found by identity number: "+identityNo);
             return new NotFoundException("Customer");});
     }
-    public CustomerDTO getCustomerByIdentityNo(String identityNo){
+
+    public CustomerDTO getCustomerByIdentityNo (String identityNo){
         return CUSTOMER_MAPPER.toDto(findCustomerByIdentityNo(identityNo));
     }
-
-
-    private LocalDateTime getLocalDateTimeNow() {
+    private LocalDateTime getLocalDateTimeNow () {
         Instant instant = clock.instant();
         return LocalDateTime.ofInstant(
                 instant,
@@ -73,8 +65,11 @@ public class CustomerService {
     }
 
 
+    }
 
 
 
 
-}
+
+
+

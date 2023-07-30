@@ -13,4 +13,5 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
     Optional<Customer> findByIdentityNo(String identityNo);
 
 
+
 }

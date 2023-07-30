@@ -21,6 +21,17 @@ import java.util.stream.Collectors;
 public class CreditScoreService {
     private final CreditScoreRepository creditScoreRepository;
 
+    protected CreditScore getLastCreditApplicationByCustomerIdentityNo(String identityNo) {
+        List<CreditScore> creditScoresOfCustomer = creditScoreRepository.findAll().stream()
+                .filter(creditScore -> creditScore.getCustomer().getIdentityNo() == identityNo)
+                .sorted(getCreditScoreCalculationDateComparator()).collect(Collectors.toList());
+        if (creditScoresOfCustomer.isEmpty()) {
+            throw new NotFoundException("Credit Score");
+        } else {
+            return creditScoresOfCustomer.get(creditScoresOfCustomer.size() - 1);
+        }
+
+    }
 
     protected int creditScoreCalculation() {
         log.info("Business logic of creditScoreCalculation starts");
@@ -29,6 +40,16 @@ public class CreditScoreService {
 
     }
 
+    private Comparator<CreditScore> getCreditScoreCalculationDateComparator() {
+        return (o1, o2) -> {
+            if (o1.getCreditScoreCalculationDate().isBefore(o2.getCreditScoreCalculationDate()))
+                return -1;
+            if (o1.getCreditScoreCalculationDate().isAfter(o2.getCreditScoreCalculationDate()))
+                return 1;
+            return 0;
+        };
+
+    }
 }
 
 

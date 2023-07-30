@@ -1,7 +1,10 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.service;
 
+import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.CreditLimitCalculatedException;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.CreditApplicationDTO;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.*;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CreditApplicationMapper;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditApplicationRepository;
 
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -22,6 +26,7 @@ public class CreditApplicationService {
     private final CreditApplicationRepository creditApplicationRepository;
     private final CreditLimitService creditLimitService;
     private final CustomerService customerService;
+    private final CreditScoreService creditScoreService;
 
     private static final CreditApplicationMapper CREDIT_APPLICATION_MAPPER= Mappers.getMapper(CreditApplicationMapper.class);
 
@@ -33,10 +38,27 @@ public class CreditApplicationService {
         return CREDIT_APPLICATION_MAPPER.toDto(creditApplicationRepository.save(creditApplication));
     }
     protected CreditApplication getLastCreditApplicationByCustomerIdentityNo(String identityNo){
-        List<CreditApplication> creditApplication= creditApplicationRepository.findByCustomer_IdentityNo(identityNo)   .stream().sorted(getCreditApplicationDateComparator()).collect(Collectors.toList());
+        Customer customer= customerService.findCustomerByIdentityNo(identityNo);
+        List<CreditApplication> creditApplicationsOfCustomer = creditApplicationRepository.findAll().stream()
+                .filter(creditApplication ->creditApplication.getCustomer()==customer)
+                .sorted(getCreditApplicationDateComparator()).collect(Collectors.toList());
+        if(creditApplicationsOfCustomer.isEmpty()){
+            throw new NotFoundException("Credit Application");
+        }
+        else{
+            return creditApplicationsOfCustomer.get(creditApplicationsOfCustomer.size()-1);
+        }
+
     }
-    protected determineApplicationResultByCustomerIdentityNo(String identityNo){
+    protected CreditApplication determineApplicationResultByCustomerIdentityNo(String identityNo){
         Customer customer=customerService.findCustomerByIdentityNo(identityNo);
+        CreditApplication creditApplication= getLastCreditApplicationByCustomerIdentityNo(identityNo);
+        if (creditApplication.getApplicationResult() != CreditApplicationResult.WAITING){
+            log.error("Limit is already calculated");
+            throw new CreditLimitCalculatedException(creditApplication.getId());}
+        int creditScore=creditScoreService.getLastCreditApplicationByCustomerIdentityNo(identityNo).getScore();
+        double creditLimit =creditLimitService.creditLimitCalculation(creditApplication.getCreditMultiplier()
+                ,customer.getMonthlyIncome(),creditScore);
 
 
     }

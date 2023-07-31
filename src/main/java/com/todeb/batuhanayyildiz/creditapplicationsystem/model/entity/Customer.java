@@ -24,7 +24,7 @@ public class Customer {
     @Id
     @GeneratedValue(generator="UUID")
     @GenericGenerator(name="UUID",strategy = "org.hibernate.id.UUIDGenerator")
-    private String id ="";
+    private String id="";
 
     @Pattern(regexp="^[1-9]{1}[0-9]{9}[02468]{1}$",
             message="Format error. Example Format :00100100101")

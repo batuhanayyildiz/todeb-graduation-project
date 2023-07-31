@@ -17,6 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="credit_application")
 public class CreditApplication {
     @Id
     @GeneratedValue(generator="UUID")
@@ -24,11 +25,11 @@ public class CreditApplication {
     private String id="";
 
     @CreationTimestamp
-    @JsonFormat( pattern = "dd-MM-yyyy" )
+    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss" )
     @Column(name="application_date", updatable = false, nullable = false)
     private LocalDateTime creditApplicationDate;
 
-    @Column(name = "application_status",columnDefinition = "varchar(32) default WAITING")
+    @Column(length=32,name = "application_status",columnDefinition = "varchar(32) default 'WAITING'")
     @Enumerated(EnumType.STRING)
     private CreditApplicationResult applicationResult= CreditApplicationResult.WAITING;
 

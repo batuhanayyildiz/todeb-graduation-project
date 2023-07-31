@@ -16,6 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="credit_limit")
 public class CreditLimit {
 
 

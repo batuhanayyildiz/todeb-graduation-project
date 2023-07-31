@@ -25,7 +25,7 @@ public class CreditScore {
     private String id="";
 
     @CreationTimestamp
-    @JsonFormat( pattern = "dd-MM-yyyy" )
+    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss" )
     @Column(name="credit_score_calculation_date", updatable = false, nullable = false)
     private LocalDateTime creditScoreCalculationDate;
     @Column(name="score")

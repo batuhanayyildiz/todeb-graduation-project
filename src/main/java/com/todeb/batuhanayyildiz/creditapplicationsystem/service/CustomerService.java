@@ -26,7 +26,9 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final CreditScoreService creditScoreService;
     private static final CustomerMapper CUSTOMER_MAPPER= Mappers.getMapper(CustomerMapper.class);
+
     private final Clock clock;
+
 
     public CustomerDTO createCustomer(CustomerDTO customerDTO){
         Customer customer= CUSTOMER_MAPPER.toEntity(customerDTO);

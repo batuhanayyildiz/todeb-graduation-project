@@ -20,12 +20,13 @@ public class CreditLimitService {
 
 
 
-protected double creditLimitCalculation(int creditMultiplier,int monthlyIncome,int creditScore) {
+protected double calculateCreditLimit(int creditMultiplier,int monthlyIncome,int creditScore) {
 
     if (creditScore<1000 && monthlyIncome<5000){
         return 10000;
         }
     else if (creditScore<1000 && monthlyIncome>=5000){
+
             return 20000;
         }
 

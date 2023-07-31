@@ -30,6 +30,10 @@ public class CreditLimit {
     @JoinColumn(name = "credit_application_id", referencedColumnName = "id")
     private  CreditApplication creditApplication;
 
+    public CreditLimit(double creditLimit){
+        this.creditLimit=creditLimit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

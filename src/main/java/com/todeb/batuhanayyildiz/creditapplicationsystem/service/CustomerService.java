@@ -3,7 +3,6 @@ package com.todeb.batuhanayyildiz.creditapplicationsystem.service;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.exception.NotFoundException;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.CustomerDTO;
-import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplication;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditScore;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CustomerMapper;
@@ -24,10 +23,10 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    private static final CustomerMapper CUSTOMER_MAPPER= Mappers.getMapper(CustomerMapper.class);
-    private final Clock clock;
     private final CustomerRepository customerRepository;
     private final CreditScoreService creditScoreService;
+    private static final CustomerMapper CUSTOMER_MAPPER= Mappers.getMapper(CustomerMapper.class);
+    private final Clock clock;
 
     public CustomerDTO createCustomer(CustomerDTO customerDTO){
         Customer customer= CUSTOMER_MAPPER.toEntity(customerDTO);
@@ -63,8 +62,6 @@ public class CustomerService {
                 instant,
                 Clock.systemDefaultZone().getZone());
     }
-
-
     }
 
 

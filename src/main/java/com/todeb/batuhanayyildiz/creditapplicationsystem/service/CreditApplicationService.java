@@ -37,7 +37,7 @@ public class CreditApplicationService {
         creditApplication.setCustomer(customer);
         return CREDIT_APPLICATION_MAPPER.toDto(creditApplicationRepository.save(creditApplication));
     }
-    protected CreditApplication getLastCreditApplicationByCustomerIdentityNo(String identityNo){
+    protected CreditApplication findLastCreditApplicationByCustomerIdentityNo(String identityNo){
         Customer customer= customerService.findCustomerByIdentityNo(identityNo);
         List<CreditApplication> creditApplicationsOfCustomer = creditApplicationRepository.findAll().stream()
                 .filter(creditApplication ->creditApplication.getCustomer()==customer)
@@ -51,16 +51,37 @@ public class CreditApplicationService {
 
     }
     protected CreditApplication determineApplicationResultByCustomerIdentityNo(String identityNo){
+
         Customer customer=customerService.findCustomerByIdentityNo(identityNo);
-        CreditApplication creditApplication= getLastCreditApplicationByCustomerIdentityNo(identityNo);
+        CreditApplication creditApplication= findLastCreditApplicationByCustomerIdentityNo(identityNo);
         if (creditApplication.getApplicationResult() != CreditApplicationResult.WAITING){
             log.error("Limit is already calculated");
             throw new CreditLimitCalculatedException(creditApplication.getId());}
+
         int creditScore=creditScoreService.getLastCreditApplicationByCustomerIdentityNo(identityNo).getScore();
-        double creditLimit =creditLimitService.creditLimitCalculation(creditApplication.getCreditMultiplier()
-                ,customer.getMonthlyIncome(),creditScore);
 
+        if (creditScore<500){
+            creditApplication.setApplicationResult(CreditApplicationResult.DENIED);
+        }
+        else{
+            creditApplication.setApplicationResult(CreditApplicationResult.ACCEPTED);
+            double limit =creditLimitService.calculateCreditLimit(creditApplication.getCreditMultiplier()
+                    ,customer.getMonthlyIncome(),creditScore);
 
+            CreditLimit creditLimit= new CreditLimit(limit);
+            creditApplication.setCreditLimit(creditLimit);
+
+        }
+        return creditApplicationRepository.save(creditApplication);
+
+    }
+
+    public CreditApplicationDTO getLastCreditApplicationByIdentityNo(String identityNo){
+        return CREDIT_APPLICATION_MAPPER.toDto(findLastCreditApplicationByCustomerIdentityNo(identityNo));
+    }
+    public CreditApplicationDTO viewLastCreditApplicationByIdentityNo(String identityNo){
+        CreditApplication creditApplication=determineApplicationResultByCustomerIdentityNo(identityNo);
+        return getLastCreditApplicationByIdentityNo(identityNo);
     }
 
 

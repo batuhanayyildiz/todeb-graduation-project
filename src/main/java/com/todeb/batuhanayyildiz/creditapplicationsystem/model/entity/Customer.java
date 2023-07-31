@@ -49,7 +49,6 @@ public class Customer {
     private String phoneNo;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "credit_score_id",referencedColumnName = "id")
     private Set<CreditScore> creditScore=new HashSet<CreditScore>();
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)

@@ -48,15 +48,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/v2/api-docs",
-//                swagger2 base urls
-                "/configuration/ui",
+                "/swagger-resources",
                 "/swagger-resources/**",
+                "/configuration/ui",
                 "/configuration/security",
                 "/swagger-ui.html",
                 "/webjars/**",
-//                swagger3 base urls
-                "/swagger-ui/**",
-                "/javainuse-openapi/**");
+                // -- Swagger UI v3 (OpenAPI)
+                "/v3/api-docs/**",
+                "/swagger-ui/**");
     }
 
     @Bean

@@ -1,3 +1,4 @@
+
 package com.todeb.batuhanayyildiz.creditapplicationsystem;
 
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.User;

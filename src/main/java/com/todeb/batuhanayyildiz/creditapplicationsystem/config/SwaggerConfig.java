@@ -1,8 +1,10 @@
+
 package com.todeb.batuhanayyildiz.creditapplicationsystem.config;
 
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
@@ -13,6 +15,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+
 
 @Configuration
 public class SwaggerConfig {
@@ -43,7 +47,7 @@ public class SwaggerConfig {
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -60,3 +64,4 @@ public class SwaggerConfig {
     }
 
 }
+

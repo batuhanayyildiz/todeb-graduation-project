@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 
 import java.time.Clock;
@@ -44,7 +46,31 @@ public class CustomerService {
             return new NotFoundException("Customer");});
     }
     public CustomerDTO getCustomerById(String id) {
+
         return CUSTOMER_MAPPER.toDto(findCustomerById(id));
+    }
+
+    public void deleteCustomerByID(String id) {
+        findCustomerById(id);
+        customerRepository.deleteById(id);
+    }
+    public CustomerDTO updateCustomerByID(String id, CustomerDTO customerDTO) {
+        log.info("Business logic of updateCustomerByIdentityNo starts");
+        Customer updatedCustomer=findCustomerById(id);
+
+        if (!ObjectUtils.isEmpty(customerDTO.getName())){
+            updatedCustomer.setName(customerDTO.getName());}
+
+        if (!ObjectUtils.isEmpty(customerDTO.getSurname())){
+            updatedCustomer.setSurname(customerDTO.getSurname());}
+
+        if (!ObjectUtils.isEmpty(customerDTO.getPhoneNo())){
+            updatedCustomer.setPhoneNo(customerDTO.getPhoneNo());}
+
+        if (!ObjectUtils.isEmpty(customerDTO.getMonthlyIncome())){
+            updatedCustomer.setMonthlyIncome(customerDTO.getMonthlyIncome());}
+
+        return CUSTOMER_MAPPER.toDto(customerRepository.save(updatedCustomer));
     }
 
     protected Customer findCustomerByIdentityNo(String identityNo){

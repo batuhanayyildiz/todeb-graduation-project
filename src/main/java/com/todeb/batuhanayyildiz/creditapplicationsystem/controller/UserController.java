@@ -29,12 +29,14 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public String login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+    public String login(@Valid @RequestBody UserLoginDTO userLoginDTO)
+    {
         return userService.signin(userLoginDTO.getUsername(), userLoginDTO.getPassword());
     }
 
     @PostMapping("/signup")
-    public String signup(@RequestBody @Valid UserDataDTO userDataDTO) {
+    public String signup(@RequestBody @Valid UserDataDTO userDataDTO)
+    {
         User user = new User();
         user.setUsername(userDataDTO.getUsername());
         user.setEmail(userDataDTO.getEmail());
@@ -45,7 +47,8 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/delete/{username}")
-    public String delete(@PathVariable String username) {
+    public String delete(@PathVariable String username)
+    {
         userService.delete(username);
         return username;
     }

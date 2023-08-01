@@ -11,9 +11,10 @@ import org.springframework.stereotype.Service;
 public class SmsService {
 
 
-    public String sendNotificationByCustomer(Customer customer) {
+    public String sendNotificationByPhoneNumber(String phoneNo)
+    {
         log.info("Sms business logic is started");
-        return "Sms was sent to related customer's phone number: " + customer.getPhoneNo();
+        return "Sms was sent to related customer's phone number: " + phoneNo;
 
     }
 }

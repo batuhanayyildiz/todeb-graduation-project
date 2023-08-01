@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 public class CreditScoreService {
     private final CreditScoreRepository creditScoreRepository;
 
-    protected CreditScore getLastCreditApplicationByCustomerIdentityNo(String identityNo) {
+    protected CreditScore getLastCreditApplicationByCustomerIdentityNo(String identityNo)
+    {
         List<CreditScore> creditScoresOfCustomer = creditScoreRepository.findAll().stream()
                 .filter(creditScore -> creditScore.getCustomer().getIdentityNo() == identityNo)
                 .sorted(getCreditScoreCalculationDateComparator()).collect(Collectors.toList());
@@ -33,7 +34,8 @@ public class CreditScoreService {
 
     }
 
-    protected int creditScoreCalculation() {
+    protected int creditScoreCalculation()
+    {
         log.info("Business logic of creditScoreCalculation starts");
         int creditScore = (int) Math.round((Math.random() * 1300) + 100); // +100 is used if Math.random() gives 0.
         return creditScore;

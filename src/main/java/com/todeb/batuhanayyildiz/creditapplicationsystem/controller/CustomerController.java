@@ -18,7 +18,8 @@ public class CustomerController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity createCustomer(@RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity createCustomer(@RequestBody CustomerDTO customerDTO)
+    {
         CustomerDTO respCustomerDTO = customerService.createCustomer(customerDTO);
         if (respCustomerDTO == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -29,13 +30,15 @@ public class CustomerController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping()
-    public ResponseEntity deleteCustomer(@RequestParam(name = "id") String id) {
+    public ResponseEntity deleteCustomer(@RequestParam(name = "id") String id)
+    {
         customerService.deleteCustomerByID(id);
         return ResponseEntity.status(HttpStatus.OK).body("Related Customer deleted successfully");
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity updateCustomer(@PathVariable String id, @RequestBody()CustomerDTO customerDTO){
+    public ResponseEntity updateCustomer(@PathVariable String id, @RequestBody()CustomerDTO customerDTO)
+    {
         CustomerDTO updatedCustomer=customerService.updateCustomerByID(id,customerDTO);
         if (updatedCustomer == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

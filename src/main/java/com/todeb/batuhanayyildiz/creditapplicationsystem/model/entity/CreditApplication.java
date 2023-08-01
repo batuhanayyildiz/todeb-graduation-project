@@ -45,7 +45,8 @@ public class CreditApplication {
     private Customer customer;
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreditApplication that = (CreditApplication) o;
@@ -56,7 +57,8 @@ public class CreditApplication {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(id, creditApplicationDate, applicationResult, creditLimit, creditMultiplier, customer);
     }
 }

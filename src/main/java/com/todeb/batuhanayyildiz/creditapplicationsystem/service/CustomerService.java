@@ -54,7 +54,8 @@ public class CustomerService {
         findCustomerById(id);
         customerRepository.deleteById(id);
     }
-    public CustomerDTO updateCustomerByID(String id, CustomerDTO customerDTO) {
+    public CustomerDTO updateCustomerByID(String id, CustomerDTO customerDTO)
+    {
         log.info("Business logic of updateCustomerByIdentityNo starts");
         Customer updatedCustomer=findCustomerById(id);
 
@@ -73,7 +74,8 @@ public class CustomerService {
         return CUSTOMER_MAPPER.toDto(customerRepository.save(updatedCustomer));
     }
 
-    protected Customer findCustomerByIdentityNo(String identityNo){
+    protected Customer findCustomerByIdentityNo(String identityNo)
+    {
         log.info("Business logic of getCustomerByIdentityNo starts");
         Optional<Customer> customerByIdentityNo = customerRepository.findByIdentityNo(identityNo);
         return customerByIdentityNo.orElseThrow(()->{
@@ -81,10 +83,12 @@ public class CustomerService {
             return new NotFoundException("Customer");});
     }
 
-    public CustomerDTO getCustomerByIdentityNo (String identityNo){
+    public CustomerDTO getCustomerByIdentityNo (String identityNo)
+    {
         return CUSTOMER_MAPPER.toDto(findCustomerByIdentityNo(identityNo));
     }
-    private LocalDateTime getLocalDateTimeNow () {
+    private LocalDateTime getLocalDateTimeNow ()
+    {
         Instant instant = clock.instant();
         return LocalDateTime.ofInstant(
                 instant,

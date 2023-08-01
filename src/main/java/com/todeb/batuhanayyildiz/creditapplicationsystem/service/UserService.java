@@ -26,8 +26,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-//    private final RoleRepository roleRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -35,11 +33,13 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
 
 
-    public List<User> getAll() {
+    public List<User> getAll()
+    {
         return userRepository.findAll();
     }
 
-    public String signin(String username, String password) {
+    public String signin(String username, String password)
+    {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 //            return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
@@ -49,11 +49,13 @@ public class UserService {
         }
     }
 
-    public String signup(User user, boolean isAdmin) {
-        if (!userRepository.existsByUsername(user.getUsername())) {
+    public String signup(User user, boolean isAdmin)
+    {
+        if (!userRepository.existsByUsername(user.getUsername()))
+        {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
 //          Optional<Role> relatedRole = roleRepository.findByName(isAdmin ? "ROLE_ADMIN" : "ROLE_USER");
-            Role role = isAdmin ? Role.ROLE_ADMIN : Role.ROLE_CUSTOMER;
+            Role role = isAdmin ? Role.ROLE_ADMIN : Role.ROLE_USER;
             user.setRoles(Collections.singletonList(role));
             userRepository.save(user);
             return jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
@@ -62,7 +64,8 @@ public class UserService {
         }
     }
 
-    public void delete(String username) {
+    public void delete(String username)
+    {
         User byUsername = userRepository.findByUsername(username);
         if (byUsername == null) {
             throw new NotFoundException("username : " + username);
@@ -72,7 +75,8 @@ public class UserService {
         userRepository.deleteByUsername(username);
     }
 
-    public User search(String username) {
+    public User search(String username)
+    {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new CustomJwtException("The user doesn't exist", HttpStatus.NOT_FOUND);
@@ -80,11 +84,13 @@ public class UserService {
         return user;
     }
 
-    public User whoami(HttpServletRequest req) {
+    public User whoami(HttpServletRequest req)
+    {
         return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
     }
 
-    public String refresh(String username) {
+    public String refresh(String username)
+    {
         return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
     }
 

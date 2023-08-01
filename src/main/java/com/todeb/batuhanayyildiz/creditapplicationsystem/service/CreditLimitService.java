@@ -16,11 +16,8 @@ import java.util.Optional;
 public class CreditLimitService {
     private final CreditLimitRepository creditLimitRepository;
 
-
-
-
-
-protected double calculateCreditLimit(int creditMultiplier,int monthlyIncome,int creditScore) {
+protected double calculateCreditLimit(int creditMultiplier,int monthlyIncome,int creditScore)
+{
 
     if (creditScore<1000 && monthlyIncome<5000){
         return 10000;

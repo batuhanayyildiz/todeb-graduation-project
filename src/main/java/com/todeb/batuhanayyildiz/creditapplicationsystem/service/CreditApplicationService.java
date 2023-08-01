@@ -26,18 +26,21 @@ public class CreditApplicationService {
     private final CreditApplicationRepository creditApplicationRepository;
     private final CreditLimitService creditLimitService;
     private final CustomerService customerService;
+    private final SmsService smsService;
     private final CreditScoreService creditScoreService;
 
     private static final CreditApplicationMapper CREDIT_APPLICATION_MAPPER= Mappers.getMapper(CreditApplicationMapper.class);
 
 
-    protected CreditApplicationDTO createApplicationByCustomerIdentityNo(String identityNo){
+    public CreditApplicationDTO createApplicationByCustomerIdentityNo(String identityNo)
+    {
         Customer customer=customerService.findCustomerByIdentityNo(identityNo);
         CreditApplication creditApplication=new CreditApplication();
         creditApplication.setCustomer(customer);
         return CREDIT_APPLICATION_MAPPER.toDto(creditApplicationRepository.save(creditApplication));
     }
-    protected CreditApplication findLastCreditApplicationByCustomerIdentityNo(String identityNo){
+    protected CreditApplication findLastCreditApplicationByCustomerIdentityNo(String identityNo)
+    {
         Customer customer= customerService.findCustomerByIdentityNo(identityNo);
         List<CreditApplication> creditApplicationsOfCustomer = creditApplicationRepository.findAll().stream()
                 .filter(creditApplication ->creditApplication.getCustomer()==customer)
@@ -50,7 +53,8 @@ public class CreditApplicationService {
         }
 
     }
-    protected CreditApplication determineApplicationResultByCustomerIdentityNo(String identityNo){
+    protected CreditApplication determineApplicationResultByCustomerIdentityNo(String identityNo)
+    {
 
         Customer customer=customerService.findCustomerByIdentityNo(identityNo);
         CreditApplication creditApplication= findLastCreditApplicationByCustomerIdentityNo(identityNo);
@@ -72,14 +76,17 @@ public class CreditApplicationService {
             creditApplication.setCreditLimit(creditLimit);
 
         }
+        smsService.sendNotificationByPhoneNumber(customer.getPhoneNo());
         return creditApplicationRepository.save(creditApplication);
 
     }
 
-    public CreditApplicationDTO getLastCreditApplicationByIdentityNo(String identityNo){
+    public CreditApplicationDTO getLastCreditApplicationByIdentityNo(String identityNo)
+    {
         return CREDIT_APPLICATION_MAPPER.toDto(findLastCreditApplicationByCustomerIdentityNo(identityNo));
     }
-    public CreditApplicationDTO viewLastCreditApplicationByIdentityNo(String identityNo){
+    public CreditApplicationDTO viewLastCreditApplicationByIdentityNo(String identityNo)
+    {
         CreditApplication creditApplication=determineApplicationResultByCustomerIdentityNo(identityNo);
         return getLastCreditApplicationByIdentityNo(identityNo);
     }
@@ -89,7 +96,8 @@ public class CreditApplicationService {
 
 
 
-    private Comparator<CreditApplication> getCreditApplicationDateComparator() {
+    private Comparator<CreditApplication> getCreditApplicationDateComparator()
+    {
         return (o1, o2) -> {
             if (o1.getCreditApplicationDate().isBefore(o2.getCreditApplicationDate()))
                 return -1;

@@ -14,7 +14,7 @@
 ## Desired Requirements by Company
 1. Backend:
 - By obtaining the identity number, name-surname, monthly income and telephone information from the user, the credit score service, which is assumed to have been written before, is interacted. Then, credit score is obtained from the service. Finally, credit application result is showed to related person.(There may be two options as Approval or Rejection.)
-Rules:
+### Rules:
 - New users can be defined in the system, existing customers can be updated or deleted.
 - If the credit score is below 500, the user will be rejected. (Credit result: Rejected)
 - If Credit score between 500 points and 1000 points and monthly income is below 5000 TL, the user's loan application is approved and a limit of 10,000 TL is assigned to the user.(Credit Result: Approval)

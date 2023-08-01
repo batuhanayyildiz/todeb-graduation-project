@@ -11,6 +11,18 @@
 - Lombok
 - ModelMapper V2.4.5
 - Mapstruct V1.5.2 Final
+## Desired Requirements by Company
+1. Backend:
+- By obtaining the identity number, name-surname, monthly income and telephone information from the user, the credit score service, which is assumed to have been written before, is interacted. Then, credit score is obtained from the service. Finally, credit application result is showed to related person.(There may be two options as Approval or Rejection.)
+Rules:
+- New users can be defined in the system, existing customers can be updated or deleted.
+- If the credit score is below 500, the user will be rejected. (Credit result: Rejected)
+- If Credit score between 500 points and 1000 points and monthly income is below 5000 TL, the user's loan application is approved and a limit of 10,000 TL is assigned to the user.(Credit Result: Approval)
+- If the credit score is between 500 points and 1000 points and if the monthly income is above 5000 TL,the user's loan application is approved and a limit of 20,000 TL is assigned to the user. (Credit Result: Approval)
+- If the credit score is equal to or above 1000 points, The limit is assigned as much as the MONTHLY INCOME * CREDIT LIMIT MULTIPLIER. (Credit Result: Approval)
+- As a result of the conclusion of the loan, the relevant application is recorded in the database. Then, If so, a notification SMS will be sent to the relevant phone number.Also, the confirmation status(rejection or approval) and limit information will be sent from the endpoint.  
+- A completed loan application can only be queried with an identity number  
+Notes: The credit limit multiplier is 4 by default.
 
 ## Expected Running Procedure
 For all types, Bank = Admin<br /><br />

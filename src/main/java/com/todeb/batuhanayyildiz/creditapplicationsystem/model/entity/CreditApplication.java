@@ -38,7 +38,7 @@ public class CreditApplication {
     private CreditLimit creditLimit;
 
     @Column(name = "credit_multiplier",columnDefinition = "integer default 4")
-    private int creditMultiplier;
+    private int creditMultiplier=4;
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")

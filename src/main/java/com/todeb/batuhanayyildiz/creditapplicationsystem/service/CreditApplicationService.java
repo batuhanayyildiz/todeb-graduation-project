@@ -61,8 +61,8 @@ public class CreditApplicationService {
         if (creditApplication.getApplicationResult() != CreditApplicationResult.WAITING){
             log.error("Limit is already calculated");
             throw new CreditLimitCalculatedException(creditApplication.getId());}
-
-        int creditScore=creditScoreService.getLastCreditApplicationByCustomerIdentityNo(identityNo).getScore();
+        log.info("CreditScoreService is reached by determineApplicationResultByCustomerIdentityNo() method");
+        int creditScore=creditScoreService.getLastCreditScoreByCustomerIdentityNo(identityNo).getScore();
 
         if (creditScore<500){
             creditApplication.setApplicationResult(CreditApplicationResult.DENIED);
@@ -72,7 +72,7 @@ public class CreditApplicationService {
             double limit =creditLimitService.calculateCreditLimit(creditApplication.getCreditMultiplier()
                     ,customer.getMonthlyIncome(),creditScore);
 
-            CreditLimit creditLimit= new CreditLimit(limit);
+            CreditLimit creditLimit= new CreditLimit(creditApplication,limit);
             creditApplication.setCreditLimit(creditLimit);
 
         }
@@ -99,18 +99,18 @@ public class CreditApplicationService {
         String result;
         if (creditApplicationDTO.getApplicationResult()!=CreditApplicationResult.ACCEPTED)
         {
-            result = "Identity number: " + customer.getIdentityNo() + " --- "
-                    + "Name: " + customer.getName() + " --- "
-                    + "Surname: " + customer.getSurname() + " --- "
-                    + "Credit Result: " + creditApplicationDTO.getApplicationResult().toString() + " --- ";
+            result = "Identity number: " + customer.getIdentityNo() + "<br/>"
+                    + "Name: " + customer.getName() + "<br/>"
+                    + "Surname: " + customer.getSurname() + "<br/>"
+                    + "Credit Result: " + creditApplicationDTO.getApplicationResult().toString() + "<br/>";
             log.info("Business logic of viewCreditApplicationResultByIdentityNo method ends");
         }
         else
         {
-            result = "Identity number: " + customer.getIdentityNo() + " --- "
-                    + "Name: " + customer.getName() + " --- "
-                    + "Surname: " + customer.getSurname() + " --- "
-                    + "Credit Result: " + creditApplicationDTO.getApplicationResult().toString() + " --- "
+            result = "Identity number: " + customer.getIdentityNo() + "<br/>"
+                    + "Name: " + customer.getName() + "<br/>"
+                    + "Surname: " + customer.getSurname() + "<br/>"
+                    + "Credit Result: " + creditApplicationDTO.getApplicationResult().toString() + "<br/>"
                     + "Credit Limit: " + creditApplicationDTO.getCreditLimit().getCreditLimit();
             log.info("Business logic of viewCreditApplicationResultByIdentityNo method ends");
         }

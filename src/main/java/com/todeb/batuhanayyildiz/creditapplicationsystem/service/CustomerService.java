@@ -34,7 +34,7 @@ public class CustomerService {
 
     public CustomerDTO createCustomer(CustomerDTO customerDTO){
         Customer customer= CUSTOMER_MAPPER.toEntity(customerDTO);
-        CreditScore creditScore = new CreditScore(getLocalDateTimeNow(),creditScoreService.creditScoreCalculation());
+        CreditScore creditScore = new CreditScore(customer,getLocalDateTimeNow(),creditScoreService.creditScoreCalculation());
         customer.getCreditScore().add(creditScore);
         return CUSTOMER_MAPPER.toDto(customerRepository.save(customer));
     }

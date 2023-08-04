@@ -36,7 +36,8 @@ public class CreditScore {
     private Customer customer;
 
 
-    public CreditScore(LocalDateTime creditScoreCalculationDate,int score){
+    public CreditScore(Customer customer,LocalDateTime creditScoreCalculationDate,int score){
+        this.customer=customer;
         this.creditScoreCalculationDate=creditScoreCalculationDate;
         this.score=score;
     }

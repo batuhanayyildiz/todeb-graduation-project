@@ -28,7 +28,7 @@ protected double calculateCreditLimit(int creditMultiplier,int monthlyIncome,int
         }
 
     else{
-            return monthlyIncome*creditMultiplier;
+            return (double)monthlyIncome*(double)creditMultiplier;
         }
     }
 

@@ -31,7 +31,8 @@ public class CreditLimit {
     @JoinColumn(name = "credit_application_id", referencedColumnName = "id")
     private  CreditApplication creditApplication;
 
-    public CreditLimit(double creditLimit){
+    public CreditLimit(CreditApplication creditApplication, double creditLimit)
+    {
         this.creditLimit=creditLimit;
     }
 

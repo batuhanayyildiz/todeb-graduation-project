@@ -21,11 +21,12 @@ import java.util.stream.Collectors;
 public class CreditScoreService {
     private final CreditScoreRepository creditScoreRepository;
 
-    protected CreditScore getLastCreditApplicationByCustomerIdentityNo(String identityNo)
+    protected CreditScore getLastCreditScoreByCustomerIdentityNo(String identityNo)
     {
         List<CreditScore> creditScoresOfCustomer = creditScoreRepository.findAll().stream()
-                .filter(creditScore -> creditScore.getCustomer().getIdentityNo() == identityNo)
-                .sorted(getCreditScoreCalculationDateComparator()).collect(Collectors.toList());
+                .filter(creditScore -> creditScore.getCustomer().getIdentityNo().equals( identityNo))
+                .sorted(getCreditScoreCalculationDateComparator())
+                .collect(Collectors.toList());
         if (creditScoresOfCustomer.isEmpty()) {
             throw new NotFoundException("Credit Score");
         } else {

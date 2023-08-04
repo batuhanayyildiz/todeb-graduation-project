@@ -82,14 +82,43 @@ public class CreditApplicationService {
     }
 
     public CreditApplicationDTO getLastCreditApplicationByIdentityNo(String identityNo)
+
     {
-        return CREDIT_APPLICATION_MAPPER.toDto(findLastCreditApplicationByCustomerIdentityNo(identityNo));
+        CreditApplication creditApplication=findLastCreditApplicationByCustomerIdentityNo(identityNo);
+        if (creditApplication.getApplicationResult()==CreditApplicationResult.WAITING)
+        {
+            creditApplication=determineApplicationResultByCustomerIdentityNo(identityNo);
+        }
+        return CREDIT_APPLICATION_MAPPER.toDto(creditApplication);
     }
-    public CreditApplicationDTO viewLastCreditApplicationByIdentityNo(String identityNo)
+    public String viewLastCreditApplicationResultByIdentityNo(String identityNo)
     {
-        CreditApplication creditApplication=determineApplicationResultByCustomerIdentityNo(identityNo);
-        return getLastCreditApplicationByIdentityNo(identityNo);
+
+        CreditApplicationDTO creditApplicationDTO= getLastCreditApplicationByIdentityNo(identityNo);
+        Customer customer = customerService.findCustomerByIdentityNo(identityNo);
+        String result;
+        if (creditApplicationDTO.getApplicationResult()!=CreditApplicationResult.ACCEPTED)
+        {
+            result = "Identity number: " + customer.getIdentityNo() + " --- "
+                    + "Name: " + customer.getName() + " --- "
+                    + "Surname: " + customer.getSurname() + " --- "
+                    + "Credit Result: " + creditApplicationDTO.getApplicationResult().toString() + " --- ";
+            log.info("Business logic of viewCreditApplicationResultByIdentityNo method ends");
+        }
+        else
+        {
+            result = "Identity number: " + customer.getIdentityNo() + " --- "
+                    + "Name: " + customer.getName() + " --- "
+                    + "Surname: " + customer.getSurname() + " --- "
+                    + "Credit Result: " + creditApplicationDTO.getApplicationResult().toString() + " --- "
+                    + "Credit Limit: " + creditApplicationDTO.getCreditLimit().getCreditLimit();
+            log.info("Business logic of viewCreditApplicationResultByIdentityNo method ends");
+        }
+        return result;
+
     }
+
+
 
 
 

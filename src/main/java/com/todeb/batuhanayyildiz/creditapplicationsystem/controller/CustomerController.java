@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
     private final CustomerService customerService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @PostMapping("/create")
     public ResponseEntity createCustomer(@RequestBody CustomerDTO customerDTO)
     {
@@ -26,6 +26,12 @@ public class CustomerController {
                     .body("Customer could not be created successfully");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(respCustomerDTO);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/{id}")
+    public ResponseEntity getCustomerById(@PathVariable String id){
+        return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

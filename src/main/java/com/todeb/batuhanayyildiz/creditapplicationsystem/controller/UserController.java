@@ -6,6 +6,7 @@ import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.UserDataDTO;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.UserLoginDTO;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.User;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -13,16 +14,16 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Validated
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_CUSTOMER')")
+    private final UserService userService;
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAll();

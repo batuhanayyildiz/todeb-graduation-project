@@ -26,8 +26,8 @@ public class Customer {
     @GenericGenerator(name="UUID",strategy = "org.hibernate.id.UUIDGenerator")
     private String id="";
 
-    @Pattern(regexp="^[1-9]{1}[0-9]{9}[02468]{1}$",
-            message="Format error. Example Format :00100100101")
+    //@Pattern(regexp="^[1-9]{1}[0-9]{9}[02468]{1}$",
+            //message="Format error. Example Format :00100100101")
     @NotBlank(message = "identity number cannot be empty")
     @Column(name="identity_number",nullable = false)
     private String identityNo;

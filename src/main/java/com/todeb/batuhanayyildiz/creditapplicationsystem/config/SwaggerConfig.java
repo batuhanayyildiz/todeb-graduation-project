@@ -2,6 +2,7 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem.config;
 
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,11 +34,10 @@ public class SwaggerConfig {
                 "Spring Boot Blog REST API Documentation",
                 "1",
                 "Terms of service",
-                new Contact("Batuhan Ayyıldız", "", "batuhanayyildiz06@gmail.com"),
+                "batuhanayyildiz06@gmail.com",
                 "License of API",
-                "API license URL",
-                Collections.emptyList()
-        );
+                "xxxxx"
+                   );
     }
 
     @Bean
@@ -51,6 +51,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
+
 
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth()).build();

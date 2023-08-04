@@ -35,7 +35,7 @@ public class CreditApplicationController {
     @GetMapping("view-application-result")
     public ResponseEntity viewLastCreditApplicationByIdentityNo(@RequestParam(name="identity-number") String identityNo)
     {
-        return ResponseEntity.ok(creditApplicationService.viewLastCreditApplicationByIdentityNo(identityNo));
+        return ResponseEntity.ok(creditApplicationService.viewLastCreditApplicationResultByIdentityNo(identityNo));
 
     }
 }

@@ -37,7 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/users/signin").permitAll()
                 .antMatchers("/users/signup").permitAll()
-
                 .anyRequest().authenticated();
 
         // Apply JWT
@@ -47,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs",
+        web.ignoring().antMatchers(
+                "/v2/api-docs",
                 "/swagger-resources",
                 "/swagger-resources/**",
                 "/configuration/ui",
@@ -56,7 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**",
                 // -- Swagger UI v3 (OpenAPI)
                 "/v3/api-docs/**",
-                "/swagger-ui/**");
+                "/swagger-ui/**",
+                "/swagger-ui");
     }
 
     @Bean

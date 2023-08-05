@@ -43,7 +43,7 @@ public class CreditApplicationService {
     {
         Customer customer= customerService.findCustomerByIdentityNo(identityNo);
         List<CreditApplication> creditApplicationsOfCustomer = creditApplicationRepository.findAll().stream()
-                .filter(creditApplication ->creditApplication.getCustomer()==customer)
+                .filter(creditApplication ->creditApplication.getCustomer().equals(customer))
                 .sorted(getCreditApplicationDateComparator()).collect(Collectors.toList());
         if(creditApplicationsOfCustomer.isEmpty()){
             throw new NotFoundException("Credit Application");

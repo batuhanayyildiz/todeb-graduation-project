@@ -42,7 +42,6 @@ public class UserService {
     {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-//            return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
             return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
         } catch (AuthenticationException e) {
             throw new CustomJwtException("Invalid username/password supplied", HttpStatus.BAD_REQUEST);

@@ -47,8 +47,8 @@ For all types, Bank = Admin<br /><br />
 5. Customer can view result with identity number after credit application is created.<br /><br />
 ---> by following this URI --> "/api/application/view/application-result/{identityNo}"
 
-
-## Requirements
+## Design and Analysis
+### Requirements
 
 1.	User-based (Role-based authorization)
 2.	Admin (Bank) / User ( Customer)
@@ -59,7 +59,7 @@ For all types, Bank = Admin<br /><br />
 7.	Login
 8.	Sms notification
 
-## Analysis
+### Analysis
 
 1.	Bank adds,deletes and updates customers.
 2.	Bank finalizes the application
@@ -70,7 +70,7 @@ For all types, Bank = Admin<br /><br />
 7.	Customer gets Sms notification
 8.	Customer views credit result 
 
-## Design
+### Design
 
 ![Use case diagram Todeb Graduation Project](https://user-images.githubusercontent.com/84630121/184538333-c41ceb99-50a5-4c7b-9539-02a84548ebe8.png)
 

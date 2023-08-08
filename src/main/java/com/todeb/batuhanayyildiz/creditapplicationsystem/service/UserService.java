@@ -53,7 +53,6 @@ public class UserService {
         if (!userRepository.existsByUsername(user.getUsername()))
         {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-//          Optional<Role> relatedRole = roleRepository.findByName(isAdmin ? "ROLE_ADMIN" : "ROLE_USER");
             Role role = isAdmin ? Role.ROLE_ADMIN : Role.ROLE_USER;
             user.setRoles(Collections.singletonList(role));
             userRepository.save(user);
@@ -68,7 +67,7 @@ public class UserService {
         User byUsername = userRepository.findByUsername(username);
         if (byUsername == null) {
             throw new NotFoundException("username : " + username);
-        } else if (byUsername.getRoles().contains(Role.ROLE_ADMIN)) {
+        } else if (!byUsername.getRoles().contains(Role.ROLE_ADMIN)) {
             throw new AccessDeniedException("No permission to delete user : " + username);
         }
         userRepository.deleteByUsername(username);
@@ -83,14 +82,5 @@ public class UserService {
         return user;
     }
 
-    public User whoami(HttpServletRequest req)
-    {
-        return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
-    }
-
-    public String refresh(String username)
-    {
-        return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
-    }
 
 }

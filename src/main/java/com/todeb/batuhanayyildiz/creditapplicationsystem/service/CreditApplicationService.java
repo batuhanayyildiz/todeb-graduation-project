@@ -62,7 +62,7 @@ public class CreditApplicationService {
             log.error("Limit is already calculated");
             throw new CreditLimitCalculatedException(creditApplication.getId());}
         log.info("CreditScoreService is reached by determineApplicationResultByCustomerIdentityNo() method");
-        int creditScore=creditScoreService.getLastCreditScoreByCustomerIdentityNo(identityNo).getScore();
+        int creditScore=creditScoreService.findLastCreditScoreByCustomerIdentityNo(identityNo).getScore();
 
         if (creditScore<500){
             creditApplication.setApplicationResult(CreditApplicationResult.DENIED);

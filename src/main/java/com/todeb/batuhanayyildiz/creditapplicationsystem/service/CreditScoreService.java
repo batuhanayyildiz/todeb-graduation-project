@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class CreditScoreService {
     private final CreditScoreRepository creditScoreRepository;
 
-    protected CreditScore getLastCreditScoreByCustomerIdentityNo(String identityNo)
+    protected CreditScore findLastCreditScoreByCustomerIdentityNo(String identityNo)
     {
         List<CreditScore> creditScoresOfCustomer = creditScoreRepository.findAll().stream()
                 .filter(creditScore -> creditScore.getCustomer().getIdentityNo().equals( identityNo))

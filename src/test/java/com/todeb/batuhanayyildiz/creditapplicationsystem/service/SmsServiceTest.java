@@ -12,7 +12,7 @@ class SmsServiceTest {
     private SmsService smsService;
 
     @BeforeEach
-    public void setup()
+    public void setUp()
     {
 
         smsService= new SmsService();

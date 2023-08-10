@@ -36,7 +36,7 @@ class UserServiceTest {
     private UserService userService;
 
     @BeforeEach
-    public void setup()
+    public void setUp()
     {
         userRepository= Mockito.mock(UserRepository.class);
         passwordEncoder= Mockito.mock(PasswordEncoder.class);

@@ -26,7 +26,7 @@ class CreditScoreServiceTest {
 
 
     @BeforeEach
-    public void  setup()
+    public void  setUp()
     {
         creditScoreRepository= Mockito.mock(CreditScoreRepository.class);
 

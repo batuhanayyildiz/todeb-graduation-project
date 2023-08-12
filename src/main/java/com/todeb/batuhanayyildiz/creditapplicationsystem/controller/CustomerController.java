@@ -38,14 +38,14 @@ public class CustomerController {
     @DeleteMapping()
     public ResponseEntity deleteCustomer(@RequestParam(name = "id") String id)
     {
-        customerService.deleteCustomerByID(id);
+        customerService.deleteCustomerById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Related Customer deleted successfully");
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity updateCustomer(@PathVariable String id, @RequestBody()CustomerDTO customerDTO)
     {
-        CustomerDTO updatedCustomer=customerService.updateCustomerByID(id,customerDTO);
+        CustomerDTO updatedCustomer=customerService.updateCustomerById(id,customerDTO);
         if (updatedCustomer == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Customer could not be updated successfully");

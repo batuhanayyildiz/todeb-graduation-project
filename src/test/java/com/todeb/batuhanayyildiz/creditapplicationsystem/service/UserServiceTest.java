@@ -199,10 +199,11 @@ class UserServiceTest {
     }
 
     @Test
-    void testDelete_ifUserIsFoundAndHasAccess_shouldThrowAccessDeniedException()
+    void testDelete_ifUserIsFoundAndHasAccess()
     {
         User user= new User(1,"ali","ali@mail.com","ali", Collections.singletonList(Role.ROLE_ADMIN));
         String username=user.getUsername();
+
         Mockito.when(userRepository.findByUsername(username)).thenReturn(user);
         Mockito.doNothing().when(userRepository).deleteByUsername(username);
 

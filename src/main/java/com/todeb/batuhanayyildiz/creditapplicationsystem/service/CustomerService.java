@@ -50,11 +50,11 @@ public class CustomerService {
         return CUSTOMER_MAPPER.toDto(findCustomerById(id));
     }
 
-    public void deleteCustomerByID(String id) {
+    public void deleteCustomerById(String id) {
         findCustomerById(id);
         customerRepository.deleteById(id);
     }
-    public CustomerDTO updateCustomerByID(String id, CustomerDTO customerDTO)
+    public CustomerDTO updateCustomerById(String id, CustomerDTO customerDTO)
     {
         log.info("Business logic of updateCustomerByIdentityNo starts");
         Customer updatedCustomer=findCustomerById(id);

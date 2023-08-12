@@ -31,7 +31,7 @@ public class CreditScore {
     @Column(name="score")
     private int score;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
@@ -47,12 +47,12 @@ public class CreditScore {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreditScore that = (CreditScore) o;
-        return score == that.score && id.equals(that.id) && creditScoreCalculationDate.equals(that.creditScoreCalculationDate) && customer.equals(that.customer);
+        return score == that.score && id.equals(that.id) && creditScoreCalculationDate.equals(that.creditScoreCalculationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, score, creditScoreCalculationDate, customer);
+        return Objects.hash(id, score, creditScoreCalculationDate);
     }
 }
     /*

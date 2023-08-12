@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @RestController
 @RequestMapping("v1/credit-application")
-public class CreditApplicationController {
+public class CreditApplicationController
+{
 
     private final CreditApplicationService creditApplicationService;
 

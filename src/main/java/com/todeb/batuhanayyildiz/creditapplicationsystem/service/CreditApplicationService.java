@@ -137,15 +137,3 @@ public class CreditApplicationService {
     }
 
 }
-/*
-    private Comparator<CreditApplication> getCreditApplicationComparator() {
-        return (o1, o2) -> {
-            if (o1.getId() - o2.getId() < 0)
-                return -1;
-            if (o1.getId() - o2.getId() == 0)
-                return 0;
-            return 1;
-        };
-    }
-
- */

@@ -1,7 +1,10 @@
 package com.todeb.batuhanayyildiz.creditapplicationsystem;
 
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.CreditApplicationDTO;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.dto.CustomerDTO;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.CreditApplication;
 import com.todeb.batuhanayyildiz.creditapplicationsystem.model.entity.Customer;
+import com.todeb.batuhanayyildiz.creditapplicationsystem.model.enums.CreditApplicationResult;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -20,6 +23,22 @@ public class TestSupport
 
     public LocalDateTime getLocalDateTime() {
         return LocalDateTime.ofInstant(getCurrentInstant(), Clock.systemDefaultZone().getZone());
+    }
+    public CreditApplication generateCreditApplication(Customer customer) {
+
+        CreditApplication creditApplication=new CreditApplication("creditApplicationId",getLocalDateTime()
+                , CreditApplicationResult.WAITING,null,4,customer);
+
+        return  creditApplication;
+    }
+    public CreditApplicationDTO generateCreditApplicationDTO(CreditApplication creditApplication) {
+        CreditApplicationDTO creditApplicationDTO =new CreditApplicationDTO();
+
+        creditApplicationDTO.setCreditApplicationDate(creditApplication.getCreditApplicationDate());
+        creditApplicationDTO.setCreditLimit(creditApplication.getCreditLimit());
+        creditApplicationDTO.setApplicationResult(creditApplication.getApplicationResult());
+
+        return creditApplicationDTO;
     }
 
     public Customer generateCustomer() {

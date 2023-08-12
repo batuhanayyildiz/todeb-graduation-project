@@ -25,7 +25,6 @@ public class CreditApplication {
     private String id="";
 
     @CreationTimestamp
-    @JsonFormat( pattern="yyyy-MM-dd HH:mm:ss" )
     @Column(name="application_date", updatable = false, nullable = false)
     private LocalDateTime creditApplicationDate;
 
@@ -64,12 +63,3 @@ public class CreditApplication {
 }
 
 
-/*
-
-public CreditApplication (Customer customer, ) {
-        this.creditApplication=creditApplication;
-        this.creditLimit=creditLimit;
-
-
-    }
-*/

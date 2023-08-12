@@ -8,11 +8,13 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 public class CreditApplicationDTO {
     @CreationTimestamp
     @JsonFormat( pattern = "dd-MM-yyyy" )
-    private LocalDate creditApplicationDate;
+    private LocalDateTime creditApplicationDate;
 
     @Enumerated(EnumType.STRING)
     private CreditApplicationResult applicationResult;

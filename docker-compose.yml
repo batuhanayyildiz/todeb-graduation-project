@@ -1,0 +1,23 @@
+version: '3.8'
+
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123ba
+
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123ba
+      POSTGRES_DB: docker-db
+    ports:
+      - "5432:5432"

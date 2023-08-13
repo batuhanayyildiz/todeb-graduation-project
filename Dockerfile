@@ -8,6 +8,6 @@ COPY src src
 RUN ./mvnw package
 
 FROM openjdk:18
-WORKDIR credit-application-system
-COPY --from=build target/*.jar CreditApplicationSystemApplication.jar
-ENTRYPOINT ["java", "-jar", "CreditApplicationSystemApplication.jar"]
+WORKDIR creditApplicationSystem
+COPY --from=build target/*.jar credit-applicadocketion-system.jar
+ENTRYPOINT ["java", "-jar", "credit-application-system.jar"]

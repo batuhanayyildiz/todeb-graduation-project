@@ -20,7 +20,7 @@ class CreditLimitServiceTest {
     @Test
     void testCalculateCreditLimit_ifMonthlyIncomeLessThan5000AndCreditScoreLessThan1000()
     {
-        int creditMultiplier=4, monthlyIncome=5000,creditScore=999;
+        int creditMultiplier=4, monthlyIncome=499,creditScore=999;
 
         double result = creditLimitService.calculateCreditLimit(creditMultiplier,monthlyIncome,creditScore);
 

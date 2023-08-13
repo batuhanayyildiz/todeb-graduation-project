@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <version>42.3.0</version>
         </dependency>
 
         <dependency>
@@ -68,8 +68,6 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>${org.mapstruct.version}</version>
         </dependency>
-
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -89,18 +87,6 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.7.0</version>
         </dependency>
-
-
-
-
-
-
-
-
-
-
-
-
 
     </dependencies>
 
@@ -127,6 +113,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>credit-application-system</finalName>
     </build>
 
 </project>

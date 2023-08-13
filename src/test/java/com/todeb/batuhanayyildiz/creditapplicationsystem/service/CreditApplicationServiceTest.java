@@ -13,16 +13,12 @@ import com.todeb.batuhanayyildiz.creditapplicationsystem.model.mapper.CreditAppl
 import com.todeb.batuhanayyildiz.creditapplicationsystem.repository.CreditApplicationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -189,7 +185,7 @@ class CreditApplicationServiceTest extends TestSupport {
         CreditScore creditScore=new CreditScore("1", LocalDateTime.now(),1000,customer);
 
         CreditLimit creditLimit=new CreditLimit();
-        creditLimit.setCreditLimit((double)10000);
+        creditLimit.setCreditLimit(10000);
 
         CreditApplication expectedCreditApplication=new CreditApplication("creditApplicationId"
                 ,getDifferentLocalDateTime()
@@ -232,7 +228,7 @@ class CreditApplicationServiceTest extends TestSupport {
         CreditScore creditScore=new CreditScore("1", LocalDateTime.now(),1000,customer);
 
         CreditLimit creditLimit=new CreditLimit();
-        creditLimit.setCreditLimit((double)10000);
+        creditLimit.setCreditLimit(10000);
 
         CreditApplication expectedCreditApplication=new CreditApplication("creditApplicationId"
                 ,getDifferentLocalDateTime()
@@ -311,10 +307,9 @@ class CreditApplicationServiceTest extends TestSupport {
         Customer customer=generateCustomer();
         String identityNo=customer.getIdentityNo();
 
-        CreditScore creditScore=new CreditScore("1", LocalDateTime.now(),1000,customer);
 
         CreditLimit creditLimit=new CreditLimit();
-        creditLimit.setCreditLimit((double)10000);
+        creditLimit.setCreditLimit(10000);
 
         CreditApplication creditApplication=new CreditApplication("creditApplicationId"
                 ,getDifferentLocalDateTime()
@@ -343,8 +338,6 @@ class CreditApplicationServiceTest extends TestSupport {
     {
         Customer customer=generateCustomer();
         String identityNo=customer.getIdentityNo();
-
-        CreditScore creditScore=new CreditScore("1", LocalDateTime.now(),1000,customer);
 
         CreditApplication creditApplication=new CreditApplication("creditApplicationId"
                 ,getDifferentLocalDateTime()

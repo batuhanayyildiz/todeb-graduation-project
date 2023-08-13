@@ -14,17 +14,28 @@ import java.util.Set;
 
 public class TestSupport
 {
-    public Instant getCurrentInstant() {
+    public Instant getCurrentInstant()
+    {
         String instantExpected = "2023-02-15T10:15:30Z";
         Clock clock = Clock.fixed(Instant.parse(instantExpected), Clock.systemDefaultZone().getZone());
 
         return Instant.now(clock);
     }
 
-    public LocalDateTime getLocalDateTime() {
+    public LocalDateTime getLocalDateTime()
+    {
         return LocalDateTime.ofInstant(getCurrentInstant(), Clock.systemDefaultZone().getZone());
     }
-    public CreditApplication generateCreditApplication(Customer customer) {
+
+    public LocalDateTime getDifferentLocalDateTime()
+    {
+        String instantExpected = "2023-02-15T10:15:30Z";
+        Clock clock = Clock.fixed(Instant.parse(instantExpected), Clock.systemDefaultZone().getZone());
+
+        return LocalDateTime.ofInstant(Instant.now(clock), Clock.systemDefaultZone().getZone());
+    }
+    public CreditApplication generateCreditApplication(Customer customer)
+    {
 
         CreditApplication creditApplication=new CreditApplication("creditApplicationId",getLocalDateTime()
                 , CreditApplicationResult.WAITING,null,4,customer);

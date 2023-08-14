@@ -3,13 +3,13 @@
 ## Used Technologies
 
 - Java Spring Boot V2.7.2
-- JPA and PostGreSql
+- JPA and PostgreSQL
 - Java Spring Security
 - Json WebToken V0.4
 - Junit 4.13.2
 - Swagger V3
-- Lombok
-- ModelMapper V2.4.5
+- Docker
+- Lombok  
 - Mapstruct V1.5.2 Final
 ## Desired Requirements by Company
 1. Backend:
@@ -24,28 +24,29 @@
 - A completed loan application can only be queried with an identity number  
 Notes: The credit limit multiplier is 4 by default.
 
-## Expected Running Procedure
-For all types, Bank = Admin<br /><br />
-  There are two possible types of runnig procedure of application. First type is thought as customer applies credit from online and everything goes well for customer. However, when there is an obligation for credit application result, customer goes to bank and type 2 and 3 gets involved. According discontent of Customer, credit limit can be updated.Also, bank can add new credit score seperately to customer and can determine the credit result. Due to importance of data, all previous credit scores, applications,limits are kept in database. Moreover, for all types, if customer wants update his/her information, there is a necessity for going bank and perform desired process with accompaniation of bank.
-### First Type
-1. Customer or Admin enters informations of customer and credit score is added automatically.<br /><br />
- ---> by following this URI --> "/api/customer/create"<br /><br />
-2. Customer applies for credit application and result is decided automatically.<br /><br />
----> by following this URI --> "/api/application/apply/credit-application/by-identity-number/{identityNo}"<br /><br />
-3. Customer can view result with identity number.<br /><br />
----> by following this URI --> "/api/application/view/application-result/{identityNo}"
+## Starting API
+By using the commmand below on terminal, API can run on docker container with postgresql database connection <br /><br />
+Terminal command:<br /><br />
+"docker compose up --build"<br /><br />
+After running docker, endpoint's can be reached from below Swagger Url<br /><br />
+Swagger URL:<br /><br />
+http://localhost:8080/swagger-ui/index.html
 
-### Second Type
-1. Customer or Admin enters informations of customer and credit score is added automatically.<br /><br />
----> by following this URI --> "/api/customer/create"<br /><br />
-2. Bank can add new credit score.<br /><br />
----> by following this URI --> "/api/customer/add/credit-score/by-identity-number/{identityNo}"<br /><br />
-3. Bank can add new credit application.<br /><br />
----> by following this URI --> "/api/application/add/credit-application/by-identity-number/{identityNo}"<br /><br />
-4. Bank determines the result of application.<br /><br />
----> by following this URI --> "/api/application/determine/result/by-identity-number/{identityNo}"<br /><br />
-5. Customer can view result with identity number after credit application is created.<br /><br />
----> by following this URI --> "/api/application/view/application-result/{identityNo}"
+## Expected Running Procedure
+For roles in application, Bank corresponds to Admin and Customer corresponds to User<br /><br />
+
+1. User or Admin enters informations of customer and credit score is obtained from credit score service.<br /><br />
+ ---> by following this URI --> "/v1/customer/create"<br /><br />
+2. User applies for credit application and result is decided automatically.<br /><br />
+---> by following this URI --> "/v1/credit-application/create/by-identity-number/"<br /><br />
+3. User can view result with identity number.<br /><br />
+---> by following this URI --> "/v1/credit-application/view-application-result/{identityNo}"<br />
+
+Also,
+1. Customer can be deleted with entering customer id by admin.<br /><br />
+ ---> by following this URI --> "/v1/customer/delete"<br /><br />
+2. Customer can be updated with entering customer id by admin.<br /><br />
+---> by following this URI --> "/v1/customer/{id}"<br /><br />
 
 ## Design and Analysis
 ### Requirements
@@ -67,10 +68,14 @@ For all types, Bank = Admin<br /><br />
 4.	Bank sends sms for notification
 5.  Customer can become member of bank by writing its informations.
 6.	Customer applies for credit
-7.	Customer gets Sms notification
-8.	Customer views credit result 
+7.	Customer gets sms notification
+8.	Customer views credit result
 
-### Design
+### Another Diagram to Show Service Relationship
+
+![image](https://github.com/batuhanayyildiz/todeb-graduation-project/assets/84630121/a88517b9-1396-4dd7-bd5b-683f156d5b00)
+
+### UML Diagram for Defining Actor Relationship
 
 ![Use case diagram Todeb Graduation Project](https://user-images.githubusercontent.com/84630121/184538333-c41ceb99-50a5-4c7b-9539-02a84548ebe8.png)
 

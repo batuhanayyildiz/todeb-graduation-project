@@ -10,17 +10,18 @@ services:
       - db
     container_name: app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123ba
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW-SQL: false
 
   db:
     image: 'postgres:15'
-    container_name: postgres
+    container_name: db
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123ba
-      POSTGRES_DB: postgres
     ports:
       - "5432:5432"

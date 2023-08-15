@@ -27,7 +27,8 @@ Notes: The credit limit multiplier is 4 by default.
 ## Starting API
 By using the commmand below on terminal, API can run on docker container with postgresql database connection <br /><br />
 Terminal command:<br /><br />
-"docker compose up --build"<br /><br />
+At first---> "mvn clean install" <br /><br />
+Then ---> "docker compose up --build"<br /><br />
 After running docker, endpoint's can be reached from below Swagger Url<br /><br />
 Swagger URL:<br /><br />
 http://localhost:8080/swagger-ui/index.html
